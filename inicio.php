@@ -40,7 +40,6 @@ session_start();
                 <nav class="navbar navbar-expand navbar-light bg-dark topbar mb-4 static-top shadow">
                     <!-- Topbar Navbar -->
                     <?php
-                        require("vista/buzqueda.php");
                         require("vista/menuh.php");
                     ?>
                 <!-- End of Topbar -->
@@ -151,6 +150,12 @@ session_start();
                         <div class="h4">- Se configuró la opción "Perfil" y configurarlo</div>
                         <div class="h4">- Se configuró el panel principal agregando nuevas funciones y gráficas</div>
                         <div class="h4">- Se agregó secciones para el parque informática y soporte técnico</div>
+                        <div class="h4">- Se arreglo la lista de parque informatico y todas sus funciones</div>
+                        <div class="h4">- Se agrego el CRUD del mantenimiento</div>
+                        <div class="h4">- Se agregó el CRUD de las incidencias</div>
+                        <div class="h4">- Se configuro para que el registro de credenciales de servidores sea un modal</div>
+                        
+                        
                     </div>
 
                 </div>
