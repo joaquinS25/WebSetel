@@ -86,7 +86,7 @@ function ActualizarParque($id_equipo,$Tipo_producto,$nsg,$descripcion,$NomEquipo
     require("conexion.php");  
     
     $sql="UPDATE parque_informatico SET 
-    tipo_producto = '$Tipo_producto', 
+    tipo_articulo = '$Tipo_producto', 
     nsg = '$nsg',
     descripcion = '$descripcion',
     nombre_equipo = '$NomEquipo',

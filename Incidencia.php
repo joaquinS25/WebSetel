@@ -1,5 +1,9 @@
 <?php
 session_start();
+if (!isset($_SESSION['id_soporte'])) {
+    header("Location: index.php");
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -7,25 +11,16 @@ session_start();
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Parque Informático - Lista</title>
+    <title>Incidencias - Lista</title>
     <?php require("vista/estilos.php"); ?>
 </head>
 <body id="page-top">
 
-    <!-- Page Wrapper -->
     <div id="wrapper">
-
-        <!-- Sidebar -->
         <?php require("vista/menuv.php"); ?>
-        <!-- End of Sidebar -->
 
-        <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
-
-            <!-- Main Content -->
             <div id="content">
-
-                <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-dark topbar mb-4 static-top shadow">
                     <?php
                     require("vista/buzqueda.php");
@@ -35,17 +30,18 @@ session_start();
 
                 <main>
                 <?php
-                    require("modelo/m_parque.php");
+                    require("modelo/m_incidencias.php");
 
+                    // REDIRECCIÓN A EDITAR (si usas una vista aparte)
                     if (isset($_REQUEST['editar'])) {
-                        $id_equipo = $_REQUEST['editar'];
-                        echo "<script>location.href='parqueInformaticoEditar.php?id_equipo={$id_equipo}';</script>";
+                        $id_incidencia = $_REQUEST['editar'];
+                        echo "<script>location.href='incidenciaEditar.php?id_incidencia={$id_incidencia}';</script>";
                     }
 
-                    // ELIMINAR
+                    // ELIMINAR INCIDENCIA
                     else if (isset($_REQUEST['eliminar'])) {
-                        $id_equipo = $_REQUEST['eliminar'];
-                        $rpta = EliminarParque($id_equipo);
+                        $id_incidencia = $_REQUEST['eliminar'];
+                        $rpta = EliminarIncidencia($id_incidencia);
 
                         if ($rpta === "SI") {
                             echo "<script>
@@ -53,7 +49,7 @@ session_start();
                                 Swal.fire({
                                     icon: 'success',
                                     title: '¡Eliminado!',
-                                    text: 'El registro fue eliminado correctamente.',
+                                    text: 'La incidencia fue eliminada correctamente.',
                                     confirmButtonColor: '#3085d6'
                                 });
                             });
@@ -64,7 +60,7 @@ session_start();
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'Error',
-                                    text: 'No se pudo eliminar el registro.',
+                                    text: 'No se pudo eliminar la incidencia.',
                                     confirmButtonColor: '#d33'
                                 });
                             });
@@ -72,20 +68,31 @@ session_start();
                         }
                     }
 
-                    // ACTUALIZAR
+                    // ACTUALIZAR INCIDENCIA
                     else if (isset($_REQUEST['actualizar'])) {
-                        $id_equipo = $_REQUEST['id_equipo'];
-                        $tipo_producto = $_REQUEST['tipo_producto'];
-                        $nsg = $_REQUEST['nsg'];
-                        $descripcion = $_REQUEST['descripcion'];
-                        $nombre_equipo = $_REQUEST['nombre_equipo'];
-                        $ip = $_REQUEST['ip'];
-                        $id_seccion = $_REQUEST['seccion'];
-                        $responsable = $_REQUEST['responsable'];
-                        $antivirus_instalado = $_REQUEST['antivirus_instalado'];
-                        $antivirus_activo = $_REQUEST['antivirus_activo'];
+                        $id_incidencia = $_REQUEST['id_incidencia'];
+                        $id_seccion = $_REQUEST['id_seccion'];
+                        $nombre_afectado = $_REQUEST['nombre_afectado'];
+                        $problema = $_REQUEST['problema'];
+                        $tipo = $_REQUEST['tipo'];
+                        $estado = $_REQUEST['estado'];
+                        $fecha_inicio = $_REQUEST['fecha_inicio'];
+                        $fecha_culminacion = $_REQUEST['fecha_culminacion'];
+                        $observaciones = $_REQUEST['observaciones'];
+                        $id_soporte = $_SESSION['id_soporte'];
 
-                        $rpta = ActualizarParque($id_equipo, $tipo_producto, $nsg, $descripcion, $nombre_equipo, $ip, $id_seccion, $responsable, $antivirus_instalado, $antivirus_activo);
+                        $rpta = ActualizarIncidencia(
+                            $id_incidencia,
+                            $id_seccion,
+                            $nombre_afectado,
+                            $problema,
+                            $tipo,
+                            $estado,
+                            $fecha_inicio,
+                            $fecha_culminacion,
+                            $observaciones,
+                            $id_soporte
+                        );
 
                         if ($rpta === "SI") {
                             echo "<script>
@@ -93,7 +100,7 @@ session_start();
                                 Swal.fire({
                                     icon: 'success',
                                     title: '¡Actualizado!',
-                                    text: 'El equipo fue actualizado correctamente.',
+                                    text: 'La incidencia fue actualizada correctamente.',
                                     confirmButtonColor: '#3085d6'
                                 });
                             });
@@ -104,7 +111,7 @@ session_start();
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'Error',
-                                    text: 'No se pudo actualizar el equipo.',
+                                    text: 'No se pudo actualizar la incidencia.',
                                     confirmButtonColor: '#d33'
                                 });
                             });
@@ -112,8 +119,8 @@ session_start();
                         }
                     }
 
-                    $parque = ListarParque();
-                    require("vista/v_parque_listar.php");
+                    $incidencias = ListarIncidencias();
+                    require("vista/v_incidencia_listar.php");
                 ?>
                 </main>
             </div>
@@ -143,7 +150,7 @@ session_start();
                 <div class="modal-body">Seleccione "Salir" para finalizar su sesión.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                    <a class="btn btn-primary" href="login.html">Salir</a>
+                    <a class="btn btn-primary" href="login.php">Salir</a>
                 </div>
             </div>
         </div>

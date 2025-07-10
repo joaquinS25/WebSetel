@@ -1,55 +1,41 @@
 <?php
 session_start();
-require("modelo/m_parque.php");
+require("modelo/m_mantenimiento.php");
 
 $mensaje = null;
 
 if (isset($_POST['registrar'])) {
-    $Tipo_producto = $_POST['Tipo_producto'];
-    $nsg = $_POST['nsg'];
-    $descripcion = $_POST['descripcion'];
-    $NomEquipo = $_POST['NomEquipo'];
+    $id_seccion = $_POST['id_seccion'];
+    $nombre_responsable = $_POST['nombre_responsable'];
+    $nombre_equipo = $_POST['nombre_equipo'];
     $ip = $_POST['ip'];
-    $seccion = $_POST['seccion'];
-    $responsable = $_POST['responsable'];
-    $AntInst = $_POST['AntInst'];
-    $AntAct = $_POST['AntAct'];
+    $tipo = $_POST['tipo'];
+    $fecha_realizacion = $_POST['fecha_realizacion'];
+    $observaciones = $_POST['observaciones'];
+    $id_soporte = $_SESSION['id_soporte']; // ← se cambia aquí
 
-    $rpta = RegistrarParque($Tipo_producto, $nsg, $descripcion, $NomEquipo, $ip, $seccion, $responsable, $AntInst, $AntAct);
+    $rpta = RegistrarMantenimiento($id_seccion, $nombre_responsable, $nombre_equipo, $ip, $tipo, $fecha_realizacion, $observaciones, $id_soporte);
 
-    if ($rpta == "SI") {
-        $mensaje = "ok";
-    } else {
-        $mensaje = "error";
-    }
+    $mensaje = ($rpta == "SI") ? "ok" : "error";
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>Parque Informático - Contabilidad</title>
+    <title>Registrar Mantenimiento</title>
     <?php require("vista/estilos.php"); ?>
 </head>
 
 <body id="page-top">
-    <!-- Page Wrapper -->
     <div id="wrapper">
-        <!-- Sidebar -->
         <?php require("vista/menuv.php"); ?>
-        <!-- End of Sidebar -->
 
-        <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
-            <!-- Main Content -->
             <div id="content">
-                <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-dark topbar mb-4 static-top shadow">
                     <?php
                     require("vista/buzqueda.php");
@@ -57,15 +43,11 @@ if (isset($_POST['registrar'])) {
                     ?>
                 </nav>
 
-                <!-- Page Content -->
                 <main>
-                    <?php require("vista/v_parque_registrar.php"); ?>
+                    <?php require("vista/v_mantenimiento_registrar.php"); ?>
                 </main>
-                <!-- End of Page Content -->
             </div>
-            <!-- End of Main Content -->
 
-            <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
@@ -73,20 +55,17 @@ if (isset($_POST['registrar'])) {
                     </div>
                 </div>
             </footer>
-            <!-- End of Footer -->
         </div>
-        <!-- End of Content Wrapper -->
     </div>
-    <!-- End of Page Wrapper -->
 
-    <!-- Logout Modal-->
+    <!-- Modal logout -->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Seleccione "Salir" para finalizar su sesión.</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <h5 class="modal-title">¿Seguro que quiere salir?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Cerrar">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
@@ -101,7 +80,6 @@ if (isset($_POST['registrar'])) {
 
     <?php require("vista/scripts.php"); ?>
 
-    <!-- SweetAlert para mensaje -->
     <?php if (isset($mensaje)): ?>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
@@ -109,20 +87,19 @@ if (isset($_POST['registrar'])) {
                 Swal.fire({
                     icon: 'success',
                     title: 'Registro exitoso',
-                    text: 'Parque informático registrado correctamente',
+                    text: 'Mantenimiento registrado correctamente',
                     confirmButtonText: 'Aceptar'
                 }).then(() => {
-                    window.location.href = 'parqueInformatico.php';
+                    window.location.href = 'Mantenimiento.php';
                 });
             <?php else: ?>
                 Swal.fire({
                     icon: 'error',
                     title: 'Error al registrar',
-                    text: 'Hubo un problema al registrar el parque informático'
+                    text: 'Hubo un problema al registrar el mantenimiento'
                 });
             <?php endif; ?>
         </script>
     <?php endif; ?>
 </body>
-
 </html>

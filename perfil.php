@@ -18,6 +18,54 @@ require("modelo/m_usuario.php"); // Ajusta la ruta si está en otra carpeta
     ?>
 </head>
 <body>
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+        const campos = [
+            document.getElementById("nombreid"),
+            document.getElementById("apellidoid"),
+            document.getElementById("nombreuid"),
+            document.getElementById("contraid")
+        ];
+
+        const editable = document.getElementById("editable");
+        const cancelable = document.getElementById("cancelable");
+        const guardable = document.getElementById("guardable");
+        const regresable = document.getElementById("regresable");
+
+        let valoresOriginales = campos.map(input => input.value);
+
+        editable.addEventListener("click", function () {
+            valoresOriginales = campos.map(input => input.value);
+            campos.forEach(input => input.removeAttribute("readonly"));
+
+            editable.classList.add("hidden");
+            cancelable.classList.remove("hidden");
+            guardable.classList.remove("hidden");
+            regresable.classList.add("hidden");
+        });
+
+        guardable.addEventListener("click", function () {
+            campos.forEach(input => input.setAttribute("readonly", true));
+            editable.classList.remove("hidden");
+            cancelable.classList.add("hidden");
+            guardable.classList.add("hidden");
+            regresable.classList.remove("hidden");
+        });
+
+        cancelable.addEventListener("click", function () {
+            campos.forEach((input, index) => {
+                input.value = valoresOriginales[index];
+                input.setAttribute("readonly", true);
+            });
+
+            editable.classList.remove("hidden");
+            cancelable.classList.add("hidden");
+            guardable.classList.add("hidden");
+            regresable.classList.remove("hidden");
+        });
+    });
+    </script>
     <style>
         .hidden {
             display: none;
@@ -49,55 +97,57 @@ require("modelo/m_usuario.php"); // Ajusta la ruta si está en otra carpeta
                 </nav>
             </div>
             <div class="container containerr">
-                <form action="usuarioEditar.php" method="post">
-                    <div class="row mt-5 py-3">
-                        <h2>Perfil</h2>
-                    </div>
-                    <hr>
-                    
-                    <div class="row">
-                        <label for="nombreid">Nombres</label>
-                    </div>
-                    <div class="row col-3">
-                        <input id="nombreid" type="text" name="nombre" class="editable form-control inputd" disabled value="<?php echo $_SESSION['nom_session']; ?>"></input>
-                    </div>
-                    
-                    <br>
-                    <br>
-                    <div class="row">
-                        <label for="apellidoid">Apellidos</label>
-                    </div>
-                    <div class="row col-3">
-                        <input class="editable form-control inputd" type="text" id="apellidoid" name="apellido" disabled value="<?php echo $_SESSION['ape_session']; ?>"></input>
-                    </div>
-                    <br>
-                    <br>
-                    <div class="row">
-                        <label for="nombreuid">Nombre de usuario</label>
-                    </div>
-                    <div class="row col-3">
-                        <input class="editable form-control inputd" type="text" id="nombreuid" name="usuario" disabled value="<?php echo $_SESSION['usuario']; ?>"></input>
-                    </div>
-                    <br>
-                    <br>
-                    <div class="row">
-                        <label for="contraid">Contraseña</label>
-                    </div>
-                    <div action="" class="row col-3">
-                        <input class="editable form-control inputd" type="text" id="contraid" name="contrasena" disabled value="<?php echo $_SESSION['contrasena']; ?>"></input>
-                    </div>
-                    <br>
-                    <div class="row py-4">
-                        <div class="col-9">
-                        </div>
-                        <div class="col-3" style="text-align: end;">
-                            <a type="button" role="button" class="btn btn-secondary button edit-btn me-5" id="editable">Editar</a>
-                            <a href="inicio.php" type="button" role="button" class="btn btn-secondary" id="regresable">Regresar</a>
-                            <a type="button" role="button" class="btn btn-secondary button cancel-btn hidden" id="cancelable">Cancelar</a>
-                            <button type="submit" role="button" name="actualizar" class="btn btn-secondary button save-btn hidden" id="guardable">Guardar</button>
-                        </div>
-                    </div>
-                </form>
+        <form action="usuarioEditar.php" method="post">
+            <div class="row mt-5 py-3">
+                <h2>Perfil</h2>
+            </div>
+            <hr>
+
+            <!-- Campo oculto para enviar ID del usuario -->
+            <input type="hidden" name="id_usuario" value="<?php echo $_SESSION['id_usuario']; ?>">
+
+            <div class="row">
+                <label for="nombreid">Nombres</label>
+            </div>
+            <div class="row col-3">
+                <input id="nombreid" type="text" name="nombre" class="editable form-control inputd" readonly value="<?php echo $_SESSION['nom_session']; ?>">
+            </div>
+
+            <br><br>
+            <div class="row">
+                <label for="apellidoid">Apellidos</label>
+            </div>
+            <div class="row col-3">
+                <input class="editable form-control inputd" type="text" id="apellidoid" name="apellido" readonly value="<?php echo $_SESSION['ape_session']; ?>">
+            </div>
+
+            <br><br>
+            <div class="row">
+                <label for="nombreuid">Nombre de usuario</label>
+            </div>
+            <div class="row col-3">
+                <input class="editable form-control inputd" type="text" id="nombreuid" name="usuario" readonly value="<?php echo $_SESSION['usuario']; ?>">
+            </div>
+
+            <br><br>
+            <div class="row">
+                <label for="contraid">Contraseña</label>
+            </div>
+            <div class="row col-3">
+                <input class="editable form-control inputd" type="text" id="contraid" name="contrasena" readonly value="<?php echo $_SESSION['contrasena']; ?>">
+            </div>
+
+            <br>
+            <div class="row py-4">
+                <div class="col-9"></div>
+                <div class="col-3" style="text-align: end;">
+                    <a type="button" role="button" class="btn btn-secondary button edit-btn me-5" id="editable">Editar</a>
+                    <a href="inicio.php" type="button" role="button" class="btn btn-secondary" id="regresable">Regresar</a>
+                    <a type="button" role="button" class="btn btn-secondary button cancel-btn hidden" id="cancelable">Cancelar</a>
+                    <button type="submit" role="button" name="actualizar" class="btn btn-secondary button save-btn hidden" id="guardable">Guardar</button>
+                </div>
+            </div>
+        </form>
                 <br>
                 <br>
                 <br>

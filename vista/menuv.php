@@ -34,7 +34,7 @@
     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
         <div class="bg-dark py-2 collapse-inner rounded">
             <h6 class="collapse-header text-secondary-subtle">Dependencias</h6>
-            <a class="collapse-item text-white depe_hover" href="ListarIncidencias.php">Agregar Incidencias</a>
+            <a class="collapse-item text-white depe_hover" href="servidores_registrar.php">Agregar Servidores</a>
             <a class="collapse-item depe_hover text-white" href="parqueInformaticoRegistrar.php">Registrar PI</a>
         </div>
     </div>
@@ -87,11 +87,16 @@
     <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
         <div class="bg-dark py-2 collapse-inner rounded">
         <h6 class="collapse-header text-secondary-subtle">Mantenimiento</h6>
-            <a class="collapse-item depe_hover text-white" href="#">Lista de mantenimiento</a>
-            <a class="collapse-item depe_hover text-white" href="#">PC arregladas</a>
-            <a class="collapse-item depe_hover text-white" href="#">PC malogradas</a>
-            <a class="collapse-item depe_hover text-white" href="#">PC en cuarentena</a>
-            <a class="collapse-item depe_hover text-white" href="#">Stock de inventario</a>
+            <a class="collapse-item depe_hover text-white" href="servidores.php">Credenciales de Servidores</a>
+            <a class="collapse-item depe_hover text-white" href="mantenimiento.php">Listar Mantenimiento</a>
+            <a class="collapse-item depe_hover text-white" href="MantenimientoRegistrar.php">Registrar Mantenimiento</a>
+            <a class="collapse-item depe_hover text-white" href="Incidencia.php"> Lista de Incidencias</a>
+            <a class="collapse-item depe_hover text-white" href="IncidenciaRegistrar.php"> Registrar Incidencias</a>
+            
+            
+            
+            
+            
         </div>
     </div>
 </li>

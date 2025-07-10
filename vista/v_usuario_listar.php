@@ -9,7 +9,7 @@
                         </style>
 
                         <!-- Page Heading -->
-                        <h1 class="h3 mb-2 text-gray-800">Parque Informático</h1>
+                        <h1 class="h3 mb-2 text-gray-800">LISTA DE USUARIOS DE SOPORTE</h1>
 
                         <!-- DataTales Example -->
                         <div class="card shadow mb-4">
@@ -36,11 +36,14 @@
                                             foreach($usuario as $hey => $value)
                                             {
                                                 $n++;
-                                                $id_usuario = $value['id_usuario'];
+                                                $id_usuario = $value['id_soporte'];
                                                 $nombre = $value['nombre'];
                                                 $apellido = $value['apellido'];
                                                 $usuario = $value['usuario'];
                                                 $contrasena = $value["contrasena"];
+
+                                                $id_modal = "#modal".$id_usuario;
+                                                $modal = "modal".$id_usuario;
                                                 ?>
                                                 <tr>
                                                     <td class="center"><?php echo $n; ?></td>
@@ -49,17 +52,21 @@
                                                     <td class="center"><?php echo $usuario;?></td>
                                                     <td class="center"><?php echo $contrasena; ?></td>
 
-                                                    <form action="usuarioEditar.php" method="post">
+                                                   
                                                     <input type="hidden" name="id_usuario" value="<?php echo $id_usuario; ?>">   
                                                     <td class="center">
-                                                        <button name="editar" type="submit" value="<?php echo $id_usuario; ?>" class="text-dark btn btn-sm btn-warning bi bi-pencil-square"></button>
+                                                        <!--button name="editar" type="submit" value="<?php echo $id_usuario; ?>" class="text-dark btn btn-sm btn-warning bi bi-pencil-square"></button-->
+                                                        <button type="button"  class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="<?php echo $id_modal;  ?>">Editar</button>
                                                     </td>
-                                                    </form>
-                                                    <form action="usuario_listar.php" method="post">
+                                                   
+                                                    
                                                         <td class="center">
-                                                            <button name="eliminar" type="submit"  value="<?php echo $id_usuario; ?>" class="text-dark btn btn-sm btn-danger bi bi-trash3" onclick="return confirm('Estas seguro de eliminar?');"></button>
+                                                            <form action="usuario_listar.php" method="post">
+                                                                <input type="hidden" name="eliminar" value="<?php echo $id_usuario; ?>">
+                                                                <button name="eliminar" type="submit"  value="<?php echo $id_usuario; ?>" class="text-dark btn btn-sm btn-danger bi bi-trash3" onclick="return confirm('Estas seguro de eliminar?');"></button>
+                                                            </form>
                                                         </td>
-                                                    </form>
+                                                    
                                                    
                                                     
                                                 </tr>
@@ -68,42 +75,35 @@
                                                 <div class="modal fade" id="<?php echo $modal;  ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
-                                                        <form action="clientes_editar.php" method="post">
+                                                        <form action="usuarioEditar.php" method="post">
                                                             <div class="modal-header">
-                                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Cliente</h1>
+                                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Usuario Soporte</h1>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
 
                                                             <div class="modal-body">
+                                                                <input type="hidden" name="id_usuario" value="<?php echo $id_usuario; ?>">
                                                                 <div class="mb-3">
                                                                 <label for="recipient-name" class="col-form-label">Nombres:</label>
-                                                                <input type="text" name="nom" value="<?php echo $nom_cliente; ?>" class="form-control" required>
+                                                                <input type="text" name="nombre" value="<?php echo $nombre; ?>" class="form-control" required>
                                                                 </div>
 
                                                                 <div class="mb-3">
                                                                 <label for="message-text" class="col-form-label">Apellidos:</label>
-                                                                <input type="text" name="ape" value="<?php echo $ape_cliente; ?>" class="form-control" required>
+                                                                <input type="text" name="apellido" value="<?php echo $apellido; ?>" class="form-control" required>
                                                                 </div>
 
                                                                 <div class="mb-3">
-                                                                <label for="message-text" class="col-form-label">DNI:</label>
-                                                                <input type="text" name="dni" value="<?php echo $dni_cliente; ?>" class="form-control" required>
+                                                                <label for="message-text" class="col-form-label">USUARIO:</label>
+                                                                <input type="text" name="usuario" value="<?php echo $usuario; ?>" class="form-control" required>
                                                                 </div>
 
                                                                 <div class="mb-3">
-                                                                <label for="message-text" class="col-form-label">Celular:</label>
-                                                                <input type="text" name="cel" value="<?php echo $cel_cliente; ?>" class="form-control" required>
+                                                                <label for="message-text" class="col-form-label">CONTRASEÑA:</label>
+                                                                <input type="text" name="contrasena" value="<?php echo $contrasena; ?>" class="form-control" required>
                                                                 </div>
 
-                                                                <div class="mb-3">
-                                                                <label for="message-text" class="col-form-label">Email:</label>
-                                                                <input type="text" name="email" value="<?php echo $email_cliente; ?>" class="form-control" required>
-                                                                </div>
-
-                                                                <div class="mb-3">
-                                                                <label for="message-text" class="col-form-label">Direccion:</label>
-                                                                <input type="text" name="dir" value="<?php echo $dir_cliente; ?>" class="form-control" required>
-                                                                </div>
+                                                                
                                                             </div>
 
                                                             <div class="modal-footer">

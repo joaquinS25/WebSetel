@@ -1,38 +1,34 @@
 <?php
-
 session_start();
 
 $user = $_REQUEST['user'];
 $pass = $_REQUEST['pass'];
 
 require("modelo/m_usuario.php");
-$usuario = ValidarUsuario($user, $pass);
+$datosUsuario = ValidarUsuario($user, $pass);
 
 //SI EXISTE ESTE USUARIO
-if($usuario!=null)
-{
-    foreach ($usuario as $key => $value) {
-        $id_usuario = $value['id_usuario'];
+if ($datosUsuario != null) {
+    foreach ($datosUsuario as $key => $value) {
+        $id_soporte = $value['id_soporte']; // ✅ CORREGIDO
         $nombre = $value['nombre'];
         $apellido = $value['apellido'];
-        $usuario = $value['usuario'];
+        $nombre_usuario = $value['usuario'];
         $contrasena = $value["contrasena"];
     }
 
-    //CREAR VARIABLES DE SESSION
+    //CREAR VARIABLES DE SESIÓN
     $_SESSION['autentificado'] = TRUE;
-    $_SESSION['id_session'] = $id_usuario;
-    $_SESSION['nom_completo_session'] = $nombre." ".$apellido;
+    $_SESSION['id_session'] = $id_soporte;
+    $_SESSION['id_soporte'] = $id_soporte; // ← este es el que usarás en mantenimiento
+    $_SESSION['nom_completo_session'] = $nombre . " " . $apellido;
     $_SESSION['nom_session'] = $nombre;
-    
     $_SESSION['ape_session'] = $apellido;
-    $_SESSION['usuario'] = $usuario;
+    $_SESSION['usuario'] = $nombre_usuario;
     $_SESSION['contrasena'] = $contrasena;
-    
+
     header('location: inicio.php');
-}
-else
-{
+} else {
     header('location: index.php');
 }
 ?>

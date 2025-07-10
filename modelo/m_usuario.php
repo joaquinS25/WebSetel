@@ -30,7 +30,7 @@
     function EliminarUsuario($id_usuario)
     {
         require("conexion.php");
-        $sql="DELETE FROM usuarios_soporte WHERE id_usuario = '$id_usuario'";
+        $sql="DELETE FROM usuarios_soporte WHERE id_soporte = '$id_usuario'";
         $res = mysqli_query($con,$sql);
         if($res) 
         {
@@ -47,7 +47,7 @@
     {
         require("conexion.php");
 
-        $sql="SELECT * FROM usuarios_soporte WHERE id_usuario='$id_usuario'";
+        $sql="SELECT * FROM usuarios_soporte WHERE id_soporte='$id_usuario'";
         $res = mysqli_query($con,$sql);
 
         $datos = array();
@@ -94,7 +94,7 @@
         contrasena = '$contrasena'
         
         
-        WHERE id_usuario = '$id_usuario'";
+        WHERE id_soporte = '$id_usuario'";
         $res = mysqli_query($con,$sql);
         if($res) 
         {
