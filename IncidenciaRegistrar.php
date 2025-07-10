@@ -93,7 +93,7 @@ if (isset($_POST['registrar'])) {
                     text: 'Mantenimiento registrado correctamente',
                     confirmButtonText: 'Aceptar'
                 }).then(() => {
-                    window.location.href = 'Incidencias.php';
+                    window.location.href = 'Incidencia.php';
                 });
             <?php else: ?>
                 Swal.fire({
