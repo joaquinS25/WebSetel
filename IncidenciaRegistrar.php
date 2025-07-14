@@ -90,7 +90,7 @@ if (isset($_POST['registrar'])) {
                 Swal.fire({
                     icon: 'success',
                     title: 'Registro exitoso',
-                    text: 'Mantenimiento registrado correctamente',
+                    text: 'Incidencia registrada correctamente',
                     confirmButtonText: 'Aceptar'
                 }).then(() => {
                     window.location.href = 'Incidencia.php';

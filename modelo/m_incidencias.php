@@ -4,19 +4,22 @@ function ListarIncidencias()
 {
     require("conexion.php");
 
-    $sql = "SELECT 
-                incidencias.*, 
-                secciones.nombre_seccion, 
-                usuarios_soporte.usuario 
-            FROM incidencias
-            INNER JOIN secciones ON incidencias.id_seccion = secciones.id_seccion
-            INNER JOIN usuarios_soporte ON incidencias.id_soporte = usuarios_soporte.id_soporte";
+    $sql = "SELECT i.*, s.nombre_seccion, 
+                   us.usuario AS usuario_creador,
+                   um.usuario AS usuario_modificador
+            FROM incidencias i
+            INNER JOIN secciones s ON i.id_seccion = s.id_seccion
+            LEFT JOIN usuarios_soporte us ON i.id_soporte_creacion = us.id_soporte
+            LEFT JOIN usuarios_soporte um ON i.id_soporte_modificacion = um.id_soporte";
 
     $res = mysqli_query($con, $sql);
-    if (!$res) die("Error en la consulta: " . mysqli_error($con));
+
+    if (!$res) {
+        die("Error al listar incidencias: " . mysqli_error($con));
+    }
 
     $datos = [];
-    while ($fila = mysqli_fetch_array($res, MYSQLI_ASSOC)) {
+    while ($fila = mysqli_fetch_assoc($res)) {
         $datos[] = $fila;
     }
 
@@ -24,51 +27,56 @@ function ListarIncidencias()
     return $datos;
 }
 
-function RegistrarIncidencia($id_seccion, $nombre_afectado, $problema, $tipo, $estado, $fecha_inicio, $fecha_culminacion, $observaciones, $id_soporte)
+function RegistrarIncidencia($id_seccion, $nombre_afectado, $problema, $tipo, $estado, $fecha_inicio, $fecha_culminacion, $observaciones, $id_soporte_creacion)
 {
     require("conexion.php");
 
     $sql = "INSERT INTO incidencias (
-                id_seccion, nombre_afectado, problema, tipo, estado, fecha_inicio, fecha_culminacion, observaciones, id_soporte
+                id_seccion, nombre_afectado, problema, tipo, estado,
+                fecha_inicio, fecha_culminacion, observaciones,
+                fecha_creacion, id_soporte_creacion
             ) VALUES (
-                '$id_seccion', '$nombre_afectado', '$problema', '$tipo', '$estado', '$fecha_inicio', '$fecha_culminacion', '$observaciones', '$id_soporte'
+                '$id_seccion', '$nombre_afectado', '$problema', '$tipo', '$estado',
+                '$fecha_inicio', '$fecha_culminacion', '$observaciones',
+                NOW(), '$id_soporte_creacion'
             )";
 
     $res = mysqli_query($con, $sql);
-    if (!$res) die("Error al registrar incidencia: " . mysqli_error($con));
+    if (!$res) {
+        die("Error al registrar incidencia: " . mysqli_error($con));
+    }
 
     mysqli_close($con);
     return "SI";
 }
 
-function ActualizarIncidencia($id_incidencia, $id_seccion, $nombre_afectado, $problema, $tipo, $estado, $fecha_inicio, $fecha_culminacion, $observaciones, $id_soporte)
+function ActualizarIncidencia($id_incidencia, $id_seccion, $nombre_afectado, $problema, $tipo, $estado, $fecha_inicio, $fecha_culminacion, $observaciones, $id_soporte_modificacion)
 {
     require("conexion.php");
 
-    $sql = "UPDATE incidencias SET 
-                id_seccion='$id_seccion',
-                nombre_afectado='$nombre_afectado',
-                problema='$problema',
-                tipo='$tipo',
-                estado='$estado',
-                fecha_inicio='$fecha_inicio',
-                fecha_culminacion='$fecha_culminacion',
-                observaciones='$observaciones',
-                id_soporte='$id_soporte'
-            WHERE id_incidencia='$id_incidencia'";
+    $sql = "UPDATE incidencias SET
+                id_seccion = '$id_seccion',
+                nombre_afectado = '$nombre_afectado',
+                problema = '$problema',
+                tipo = '$tipo',
+                estado = '$estado',
+                fecha_inicio = '$fecha_inicio',
+                fecha_culminacion = '$fecha_culminacion',
+                observaciones = '$observaciones',
+                fecha_modificacion = NOW(),
+                id_soporte_modificacion = '$id_soporte_modificacion'
+            WHERE id_incidencia = '$id_incidencia'";
 
     $res = mysqli_query($con, $sql);
     mysqli_close($con);
     return $res ? "SI" : "NO";
 }
 
-function EliminarIncidencia($id_incidencia)
+function EliminarIncidencia($id)
 {
     require("conexion.php");
-
-    $sql = "DELETE FROM incidencias WHERE id_incidencia = '$id_incidencia'";
+    $sql = "DELETE FROM incidencias WHERE id_incidencia = '$id'";
     $res = mysqli_query($con, $sql);
-
     mysqli_close($con);
     return $res ? "SI" : "NO";
 }
@@ -76,15 +84,12 @@ function EliminarIncidencia($id_incidencia)
 function ListarSecciones()
 {
     require("conexion.php");
-
     $sql = "SELECT id_seccion, nombre_seccion FROM secciones";
-    $resultado = $con->query($sql);
-
+    $res = mysqli_query($con, $sql);
     $secciones = [];
-    while ($fila = $resultado->fetch_assoc()) {
+    while ($fila = mysqli_fetch_assoc($res)) {
         $secciones[] = $fila;
     }
-
     mysqli_close($con);
     return $secciones;
 }
