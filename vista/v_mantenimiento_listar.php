@@ -8,8 +8,11 @@
     </style>
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Mantenimientos</h1>
 
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="h3 text-gray-800 mb-0">Mantenimientos</h1>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Agregar</button>
+    </div>
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -153,6 +156,68 @@
                             </div>
                         <?php } ?>
                     </tbody>
+
+                    <!-- MODAL AGREGAR -->
+
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form action="MantenimientoRegistrar.php" method="post">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar Mantenimiento</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <label class="form-label">Dependencia (Sección)</label>
+                                            <select class="form-select" name="id_seccion" required>
+                                                <option value="">Seleccionar</option>
+                                                <?php
+                                                require_once("modelo/m_mantenimiento.php");
+                                                $secciones = ListarSecciones();
+                                                foreach ($secciones as $seccion) {
+                                                    echo "<option value='{$seccion['id_seccion']}'>{$seccion['nombre_seccion']}</option>";
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Responsable</label>
+                                            <input type="text" name="nombre_responsable" class="form-control" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Nombre del Equipo</label>
+                                            <input type="text" name="nombre_equipo" class="form-control" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Dirección IP</label>
+                                            <input type="text" name="ip" class="form-control" placeholder="10.64.xx.xx" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Tipo de Mantenimiento</label>
+                                            <input type="text" name="tipo" class="form-control" placeholder="Ej: Correctivo, Preventivo" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Fecha de Realización</label>
+                                            <input type="date" name="fecha_realizacion" class="form-control" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Observaciones</label>
+                                            <textarea name="observaciones" class="form-control" rows="3" placeholder="Detalle de observaciones..."></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                        <button type="submit" name="registrar" value="<?php echo $id_mantenimeinto; ?>" class="btn btn-primary">Agregar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MODAL AGREGAR -->
                 </table>
             </div>
         </div>
