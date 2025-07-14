@@ -45,7 +45,7 @@ if (isset($_POST['registrar'])) {
                 </nav>
 
                 <main>
-                    <?php require("vista/v_mantenimiento_registrar.php"); ?>
+                    <?php require("vista/v_mantenimiento_listar.php"); ?>
                 </main>
             </div>
 
