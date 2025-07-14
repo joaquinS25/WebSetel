@@ -8,8 +8,10 @@
     </style>
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Credenciales Servidores</h1>
-
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="h3 text-gray-800 mb-0">Credenciales Servidores</h1>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Agregar</button>
+    </div>
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -163,10 +165,7 @@
                     <!-- MODAL AGREGAR -->
                     </tbody>
                 </table>
-                <div>
-                    <br>
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Agregar</button>
-                </div>
+
             </div>
         </div>
     </div>

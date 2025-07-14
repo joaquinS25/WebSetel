@@ -21,6 +21,7 @@
                     <thead>
                         <tr>
                             <th class="table-secondary center">#</th>
+                            <th class="table-secondary center">Fecha de Creación /<br> Creador</th>
                             <th class="table-secondary center">Responsable</th>
                             <th class="table-secondary center">Equipo</th>
                             <th class="table-secondary center">IP</th>
@@ -28,7 +29,7 @@
                             <th class="table-secondary center">Tipo</th>
                             <th class="table-secondary center">Fecha</th>
                             <th class="table-secondary center">Observaciones</th>
-                            <th class="table-secondary center">Usuario Soporte</th>
+                            <th class="table-secondary center">Modificado</th>
                             <th class="table-secondary center">Editar</th>
                             <th class="table-secondary center">Eliminar</th>
                         </tr>
@@ -46,13 +47,20 @@
                             $tipo = $value['tipo'];
                             $fecha_realizacion = $value['fecha_realizacion'];
                             $observaciones = $value['observaciones'];
-                            $usuario_soporte = $value['usuario'];
+                            $fecha_creacion = $value['fecha_creacion'];
+                            $fecha_modificacion = $value['fecha_modificacion'];
+                            $usuario_creador = $value['usuario_creador'];
+                            $usuario_modificador = $value['usuario_modificador'];
 
                             $id_modal = "#modal" . $id_mantenimiento;
                             $modal = "modal" . $id_mantenimiento;
                         ?>
                             <tr>
                                 <td class="center"><?php echo $n; ?></td>
+                                <td class="center">
+                                    <?php echo $fecha_creacion; ?><br>
+                                    <strong>Por: <?php echo $usuario_creador; ?></strong>
+                                </td>
                                 <td class="center"><?php echo $nombre_responsable; ?></td>
                                 <td class="center"><?php echo $nombre_equipo; ?></td>
                                 <td class="center"><?php echo $ip; ?></td>
@@ -60,12 +68,18 @@
                                 <td class="center"><?php echo $tipo; ?></td>
                                 <td class="center"><?php echo $fecha_realizacion; ?></td>
                                 <td class="center"><?php echo $observaciones; ?></td>
-                                <td class="center"><?php echo $usuario_soporte; ?></td>
 
+                                <td class="center">
+                                    <?php if (!empty($value['fecha_modificacion'])): ?>
+                                        <span style="color:rgb(0, 0, 0); font-size: 14px;">
+                                            <?php echo date("d/m/Y H:i", strtotime($value['fecha_modificacion'])); ?>
+                                        </span><br>
+                                        <strong style="color:rgb(0, 0, 0);">Por: <?php echo $value['usuario_modificador']; ?></strong>
+                                    <?php endif; ?>
+                                </td>
                                 <td class="center">
                                     <button type="button" class="btn btn-sm btn-warning bi bi-pencil-square" data-bs-toggle="modal" data-bs-target="<?php echo $id_modal; ?>"></button>
                                 </td>
-
                                 <form action="mantenimiento.php" method="post">
                                     <td class="center">
                                         <button type="button" class="btn btn-sm btn-danger bi bi-trash3" onclick="confirmarEliminacion(<?php echo $id_mantenimiento; ?>)"></button>

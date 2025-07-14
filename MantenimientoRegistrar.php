@@ -12,12 +12,13 @@ if (isset($_POST['registrar'])) {
     $tipo = $_POST['tipo'];
     $fecha_realizacion = $_POST['fecha_realizacion'];
     $observaciones = $_POST['observaciones'];
-    $id_soporte = $_SESSION['id_soporte']; // ← se cambia aquí
+    $id_soporte_creacion = $_SESSION['id_soporte']; // <- se actualizó el nombre
 
-    $rpta = RegistrarMantenimiento($id_seccion, $nombre_responsable, $nombre_equipo, $ip, $tipo, $fecha_realizacion, $observaciones, $id_soporte);
+    $rpta = RegistrarMantenimiento($id_seccion, $nombre_responsable, $nombre_equipo, $ip, $tipo, $fecha_realizacion, $observaciones, $id_soporte_creacion);
 
     $mensaje = ($rpta == "SI") ? "ok" : "error";
 }
+
 ?>
 
 <!DOCTYPE html>

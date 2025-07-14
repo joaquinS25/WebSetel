@@ -5,16 +5,17 @@ function ListarMantenimiento()
     require("conexion.php");
 
     $sql = "SELECT 
-                mantenimientos.*, 
-                secciones.nombre_seccion, 
-                usuarios_soporte.usuario AS usuario
-            FROM mantenimientos
-            INNER JOIN secciones ON mantenimientos.id_seccion = secciones.id_seccion
-            INNER JOIN usuarios_soporte ON mantenimientos.id_soporte = usuarios_soporte.id_soporte";
+                m.*,
+                s.nombre_seccion,
+                u1.usuario AS usuario_creador,
+                u2.usuario AS usuario_modificador
+            FROM mantenimientos m
+            INNER JOIN secciones s ON m.id_seccion = s.id_seccion
+            INNER JOIN usuarios_soporte u1 ON m.id_soporte_creacion = u1.id_soporte
+            LEFT JOIN usuarios_soporte u2 ON m.id_soporte_modificacion = u2.id_soporte";
 
     $res = mysqli_query($con, $sql);
 
-    // MOSTRAR EL ERROR SI FALLA LA CONSULTA
     if (!$res) {
         die("Error en la consulta SQL: " . mysqli_error($con));
     }
@@ -28,19 +29,19 @@ function ListarMantenimiento()
     return $datos;
 }
 
-
-function RegistrarMantenimiento($id_seccion, $nombre_responsable, $nombre_equipo, $ip, $tipo, $fecha_realizacion, $observaciones, $id_soporte)
+function RegistrarMantenimiento($id_seccion, $nombre_responsable, $nombre_equipo, $ip, $tipo, $fecha_realizacion, $observaciones, $id_soporte_creacion)
 {
     require("conexion.php");
 
+    $fecha_creacion = date('Y-m-d H:i:s'); // Captura la fecha actual
+
     $sql = "INSERT INTO mantenimientos (
-                id_seccion, nombre_responsable, nombre_equipo, ip, tipo, fecha_realizacion, observaciones, id_soporte
+                id_seccion, nombre_responsable, nombre_equipo, ip, tipo, fecha_realizacion, observaciones, id_soporte_creacion, fecha_creacion
             ) VALUES (
-                '$id_seccion', '$nombre_responsable', '$nombre_equipo', '$ip', '$tipo', '$fecha_realizacion', '$observaciones', '$id_soporte'
+                '$id_seccion', '$nombre_responsable', '$nombre_equipo', '$ip', '$tipo', '$fecha_realizacion', '$observaciones', '$id_soporte_creacion', '$fecha_creacion'
             )";
 
     $res = mysqli_query($con, $sql);
-
     if (!$res) {
         die("❌ Error en el registro del mantenimiento: " . mysqli_error($con));
     }
@@ -54,15 +55,20 @@ function ConsultarMantenimiento($id_mantenimiento)
 {
     require("conexion.php");
 
-    $sql = "SELECT mantenimientos.*, secciones.nombre_seccion, usuarios_soporte.usuario 
-            FROM mantenimientos
-            INNER JOIN secciones ON mantenimientos.id_seccion = secciones.id_seccion
-            INNER JOIN usuarios_soporte ON mantenimientos.id_soporte = usuarios_soporte.id_soporte
-            WHERE mantenimientos.id_mantenimiento = '$id_mantenimiento'";
+    $sql = "SELECT 
+                m.*, 
+                s.nombre_seccion, 
+                us.usuario AS creador, 
+                um.usuario AS modificador
+            FROM mantenimientos m
+            INNER JOIN secciones s ON m.id_seccion = s.id_seccion
+            LEFT JOIN usuarios_soporte us ON m.id_soporte_creacion = us.id_soporte
+            LEFT JOIN usuarios_soporte um ON m.id_soporte_modificacion = um.id_soporte
+            WHERE m.id_mantenimiento = '$id_mantenimiento'";
 
     $res = mysqli_query($con, $sql);
 
-    $datos = array();
+    $datos = [];
     while ($fila = mysqli_fetch_array($res, MYSQLI_ASSOC)) {
         $datos[] = $fila;
     }
@@ -71,7 +77,7 @@ function ConsultarMantenimiento($id_mantenimiento)
     return $datos;
 }
 
-function ActualizarMantenimiento($id_mantenimiento, $id_seccion, $nombre_responsable, $nombre_equipo, $ip, $tipo, $fecha_realizacion, $observaciones, $id_soporte)
+function ActualizarMantenimiento($id_mantenimiento, $id_seccion, $nombre_responsable, $nombre_equipo, $ip, $tipo, $fecha_realizacion, $observaciones, $id_soporte_modificacion, $fecha_modificacion)
 {
     require("conexion.php");
 
@@ -83,14 +89,15 @@ function ActualizarMantenimiento($id_mantenimiento, $id_seccion, $nombre_respons
                 tipo = '$tipo',
                 fecha_realizacion = '$fecha_realizacion',
                 observaciones = '$observaciones',
-                id_soporte = '$id_soporte'
+                id_soporte_modificacion = '$id_soporte_modificacion',
+                fecha_modificacion = '$fecha_modificacion'
             WHERE id_mantenimiento = '$id_mantenimiento'";
 
     $res = mysqli_query($con, $sql);
-
     mysqli_close($con);
     return $res ? "SI" : "NO";
 }
+
 
 function EliminarMantenimiento($id_mantenimiento)
 {

@@ -153,7 +153,8 @@ session_start();
                         <div class="h4">- Se arreglo la lista de parque informatico y todas sus funciones</div>
                         <div class="h4">- Se agrego el CRUD del mantenimiento</div>
                         <div class="h4">- Se agregó el CRUD de las incidencias</div>
-                        <div class="h4">- Se configuro para que el registro de credenciales de servidores sea un modal</div>
+                        <div class="h4">- Se agreego modal al registro de credenciales de servidores sea un modal</div>
+                        <div class="h4">- Se se agrego modal al registro de usuarios</div>
                         
                         
                     </div>

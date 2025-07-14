@@ -50,12 +50,6 @@ if (session_status() == PHP_SESSION_NONE) {
                     <label class="form-label">Fecha de Realización</label>
                     <input type="date" name="fecha_realizacion" class="form-control" required>
                 </div>
-                
-                <div class="col-md-6">
-                    <label for="formGroupExampleInput" class="form-label">UUsuario Soporte Quien Registra</label>
-                    <input type="text" name="usuario" value="<?php  echo $_SESSION['usuario']; ?>" class="form-control" aria-label="RESPONSABLE" required="required">
-                    <br>
-                </div>
 
                 <div class="col-md-12">
                     <label class="form-label">Observaciones</label>
