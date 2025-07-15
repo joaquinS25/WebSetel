@@ -52,8 +52,8 @@ session_start();
                         $apellido = $_REQUEST['apellido'];
                         $usuario = $_REQUEST['usuario'];
                         $contrasena = $_REQUEST['contrasena'];
-                        
-                        $rpta = ActualizarUsuario($id_usuario,$nombre,$apellido,$usuario,$contrasena);  
+                        $id_rol = $_REQUEST['id_rol'];
+                        $rpta = ActualizarUsuario($id_usuario,$nombre,$apellido,$usuario,$contrasena,$id_rol);  
 
                         if($rpta=="SI")
                         {

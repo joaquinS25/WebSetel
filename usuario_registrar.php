@@ -4,6 +4,7 @@ session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -15,10 +16,11 @@ session_start();
     require("vista/estilos.php");
     ?>
 </head>
+
 <body id="page-top">
     <!-- Page Wrapper -->
     <div id="wrapper">
-         <!-- Sidebar -->
+        <!-- Sidebar -->
         <?php
         require("vista/menuv.php");
         ?>
@@ -39,31 +41,30 @@ session_start();
                     ?>
                     <!-- End of Topbar -->
                     <main>
-                    <?php
-                    require("modelo/m_usuario.php");
-                    
-                    if(isset($_REQUEST['registrar']))
-                    {
-                        $nombre = $_REQUEST['nombre'];
-                        $apellido = $_REQUEST['apellido'];
-                        $usuario = $_REQUEST['usuario'];
-                        $contrasena = $_REQUEST['contrasena'];
-
-                        $rpta = RegistrarParque($nombre,$apellido,$usuario,$contrasena);  
-
-                        if($rpta=="SI")
-                        {
-                        ?>
-                        <script type="text/javascript">
-                            location.href="usuario_listar.php";
-                            echo("REGISTRADO CON EXITO");
-                        </script>
                         <?php
+                        require("modelo/m_usuario.php");
+
+                        if (isset($_REQUEST['registrar'])) {
+                            $nombre = $_REQUEST['nombre'];
+                            $apellido = $_REQUEST['apellido'];
+                            $usuario = $_REQUEST['usuario'];
+                            $contrasena = $_REQUEST['contrasena'];
+                            $id_rol = $_REQUEST['id_rol'];
+
+                            $rpta = RegistrarUsuario($nombre, $apellido, $usuario, $contrasena, $id_rol);  
+
+                            if ($rpta == "SI") {
+                        ?>
+                                <script type="text/javascript">
+                                    location.href = "usuario_listar.php";
+                                    echo("REGISTRADO CON EXITO");
+                                </script>
+                        <?php
+                            }
                         }
-                    }
-                    require("vista/v_usuario_registrar.php");
-                    ?>
-                    
+                        require("vista/v_usuario_registrar.php");
+                        ?>
+
                     </main>
                     <!-- /.container-fluid -->
             </div>
@@ -82,11 +83,11 @@ session_start();
         </div>
         <!-- End of Content Wrapper -->
 
-     </div>
-     <!-- End of Page Wrapper -->
+    </div>
+    <!-- End of Page Wrapper -->
 
 
-         <!-- Logout Modal-->
+    <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -112,4 +113,5 @@ session_start();
     ?>
 
 </body>
+
 </html>
