@@ -1,3 +1,9 @@
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+?>
+
 <ul class="navbar-nav bg-dark sidebar sidebar-dark accordion" id="accordionSidebar">
 
 <!-- Sidebar - Brand -->
@@ -54,7 +60,7 @@
         </div>
     </div>
 
-
+    <?php if ($_SESSION['rol'] === 'admin'): ?>
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree"
         aria-expanded="true" aria-controls="collapseTwo">
         <i class="fas fa-user"></i>
@@ -71,6 +77,7 @@
         </div>
         
     </div>
+    <?php endif; ?>
 </li>
 
 

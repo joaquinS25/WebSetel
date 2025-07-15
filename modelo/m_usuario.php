@@ -61,7 +61,7 @@
 
         mysqli_close($con);
     }
-    function ValidarUsuario($user, $pass)
+    /*function ValidarUsuario($user, $pass)
     {
         require("conexion.php");
     
@@ -81,7 +81,28 @@
     
         mysqli_close($con);
     
+    }*/
+
+    function ValidarUsuario($user, $pass)
+{
+    require("conexion.php");
+
+    $sql = "SELECT us.*, r.id_rol, r.nombre_rol 
+            FROM usuarios_soporte us
+            INNER JOIN roles r ON us.id_rol = r.id_rol
+            WHERE us.usuario = '$user' AND us.contrasena = '$pass'";
+
+    $res = mysqli_query($con, $sql);
+
+    $datos = array();
+    while ($fila = mysqli_fetch_array($res, MYSQLI_ASSOC)) {
+        $datos[] = $fila;
     }
+
+    mysqli_close($con);
+    return $datos;
+}
+
 
     function ActualizarUsuario($id_usuario,$nombre,$apellido,$usuario,$contrasena)
     {

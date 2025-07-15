@@ -68,6 +68,8 @@
                                 <td>
                                     <button class="btn btn-danger btn-sm bi bi-trash3" onclick="confirmarEliminacion(<?= $id ?>)"></button>
                                 </td>
+
+                                
                             </tr>
 
                             <!-- Modal Editar -->
@@ -165,17 +167,17 @@
 
                                     <div class="modal-body">
                                         <div class="mb-3">
-                                                <label>Sección</label>
-                                                <select name="id_seccion" class="form-select" required>
-                                                    <option value="">Seleccionar</option>
-                                                    <?php
-                                                    require_once("modelo/m_incidencias.php");
-                                                    $secciones = ListarSecciones();
-                                                    foreach ($secciones as $sec) {
-                                                        echo "<option value='{$sec['id_seccion']}'>{$sec['nombre_seccion']}</option>";
-                                                    }
-                                                    ?>
-                                                </select>
+                                            <label>Sección</label>
+                                            <select name="id_seccion" class="form-select" required>
+                                                <option value="">Seleccionar</option>
+                                                <?php
+                                                require_once("modelo/m_incidencias.php");
+                                                $secciones = ListarSecciones();
+                                                foreach ($secciones as $sec) {
+                                                    echo "<option value='{$sec['id_seccion']}'>{$sec['nombre_seccion']}</option>";
+                                                }
+                                                ?>
+                                            </select>
                                         </div>
                                         <div class="mb-3">
                                             <label>Nombre Afectado</label>
