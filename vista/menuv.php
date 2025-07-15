@@ -60,7 +60,7 @@ if (session_status() == PHP_SESSION_NONE) {
         </div>
     </div>
 
-    <?php if ($_SESSION['rol'] === 'admin'): ?>
+    <?php if ($_SESSION['rol'] === 'ADMINISTRADOR'): ?>
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree"
         aria-expanded="true" aria-controls="collapseTwo">
         <i class="fas fa-user"></i>

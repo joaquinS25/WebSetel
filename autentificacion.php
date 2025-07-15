@@ -63,7 +63,6 @@ if ($datosUsuario != null) {
     $_SESSION['ape_session']          = $apellido;
     $_SESSION['usuario']              = $nombre_usuario;
     $_SESSION['contrasena']           = $contrasena;
-
     // NUEVAS VARIABLES PARA ROL
     $_SESSION['id_rol']  = $id_rol;
     $_SESSION['rol']     = $nombre_rol;
