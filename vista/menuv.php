@@ -67,10 +67,10 @@ if (session_status() == PHP_SESSION_NONE) {
         <span>Usuarios</span>
     </a>
     <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-        <div class="bg-dark py-2 collapse-inner rounded">
+        <!--div class="bg-dark py-2 collapse-inner rounded">
             <h6 class="collapse-header text-secondary-subtle">Registrar</h6>
             <a class="collapse-item text-white depe_hover" href="usuario_registrar.php">Registrar Usuarios</a>
-        </div>
+        </div-->
         <div class="bg-dark py-2 collapse-inner rounded">
             <h6 class="collapse-header text-secondary-subtle">Mostrar Usuarios</h6>
             <a class="collapse-item text-white depe_hover" href="usuario_listar.php">Listar Usuarios</a>
