@@ -16,7 +16,7 @@
     <!-- Estilos personalizados -->
     <style>
         body {
-            background-image: url(https://ojo-publico.com/sites/default/files/pentagonito2.jpg);
+            background-image: url(img/pentagonito2.jpg);
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
