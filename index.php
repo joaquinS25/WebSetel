@@ -1,111 +1,134 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Iniciar Sesión</title>
 
-    <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
-
-    <!-- Custom styles for this template-->
+    <!-- Fuentes y estilos -->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
+    <!-- Estilos personalizados -->
+    <style>
+        body {
+            background-image: url(https://ojo-publico.com/sites/default/files/pentagonito2.jpg);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .login-header img {
+            height: 80px;
+            margin-bottom: 10px;
+        }
+
+        .login-header h2 {
+            color: #fff;
+            font-weight: bold;
+            font-size: 20px;
+            margin: 0;
+        }
+
+        .form-control {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+        }
+
+        .btn-primary {
+            background-color: #003366;
+            border-color: #003366;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .btn-primary:hover {
+            background-color: #00509d;
+            border-color: #00509d;
+        }
+
+        .text-center a {
+            color: #ffffff;
+        }
+
+        .text-center a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 
-<body class="bg-gradient-primary" style="
-display: flex;
-justify-content: center;
-align-items: center;
-height: 100vh;
-background-image: url(https://ojo-publico.com/sites/default/files/pentagonito2.jpg);
-background-repeat: no-repeat;
-background-position: center;
-background-attachment: fixed;
-background-size: cover;
-">
-<style>
+<body>
 
-    input:focus:invalid {
-        outline: 2px gradient red; /* Resalta el input si está vacío y tiene focus */
-    }
-</style>
     <div class="container">
-
-        <!-- Outer Row -->
         <div class="row justify-content-center">
-
-            <div class="col-xl-6 col-lg-12 col-md-10">
-
-                <div class="card o-hidden border-0 my-5" style="border-radius: 8%; background: linear-gradient(135deg, #001F3F, #0074D9); box-shadow: 5px 5px 10px black;">
-                    <div class="card-body p-0">
-                        <!-- Nested Row within Card Body -->
-                        <div class="row">
-                            <div class="col-lg-3 d-none d-lg-block bg-login-image"></div>
-                            <div class="col-lg-12">
-                                <div class="p-5">
-                                    <div class="text-center">
-                                        <h1 class="h4 text-black-50 mb-4"><strong>Iniciar Sesión</strong></h1>
-                                    </div>
-                                    <form action="autentificacion.php" method="post" class="user">
-                                        <div class="form-group">
-                                            <input type="text" id="nombreu" name="user" class="form-control form-control-user input"
-                                                id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Nombre de usuario" value="">
-                                        </div>
-                                        <div class="form-group">
-                                            <input id="contra" type="password" name="pass" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="Contraseña">
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                <label class="custom-control-label" for="customCheck">Recordar</label>
-                                            </div>
-                                        </div>
-                                        <!--a href="index.php" class="btn btn-primary btn-user btn-block disabled" id="enviar">Acceder</a-->
-                                        <button class="btn btn-primary btn-user btn-block disabled" id="enviar" name="ingresar">Acceder</button>
-                                    </form>
-                                    <hr>
-                                    <div class="text-center">
-                                        <a class="small" href="forgot-password.php"><strong>¿Olvidaste tu contraseña?</strong></a>
-                                    </div>
-                                    <div class="text-center">
-                                        <a class="small" href="register.php"><strong>Crear una cuenta nueva</strong></a>
-                                    </div>
+            <div class="col-xl-6 col-lg-8 col-md-10">
+                <div class="card login-card">
+                    <div class="login-header">
+                        <!-- Logo del Ejército del Perú -->
+                        <img src="img/logo.png" alt="Logo Ejército del Perú">
+                        <h2>OFICINA DE ECONOMÍA DEL EJÉRCITO</h2>
+                        <p class="text-white">Seccion Telematica</p>
+                    </div>
+                    <div class="card-body">
+                        <form action="autentificacion.php" method="post" class="user">
+                            <div class="form-group">
+                                <input type="text" name="user" class="form-control form-control-user"
+                                    placeholder="Nombre de usuario" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" name="pass" class="form-control form-control-user"
+                                    placeholder="Contraseña" required>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox small">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck">
+                                    <label class="custom-control-label text-white" for="customCheck">Recordarme</label>
                                 </div>
                             </div>
+                            <button type="submit" name="ingresar" class="btn btn-primary btn-user btn-block">
+                                Acceder
+                            </button>
+                        </form>
+                        <hr>
+                        <div class="text-center">
+                            <a class="small" href="forgot-password.php"><strong>¿Olvidaste tu contraseña?</strong></a>
+                        </div>
+                        <div class="text-center">
+                            <a class="small" href="register.php"><strong>Crear una cuenta nueva</strong></a>
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </div>
-
     </div>
 
-    <!-- Bootstrap core JavaScript-->
+    <!-- Scripts -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="js/demo/validacion.js" defer></script>
-    <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
-    <?php
-        require("vista/scripts.php");
-    ?>
+    <script src="js/demo/validacion.js" defer></script>
+    <?php require("vista/scripts.php"); ?>
 </body>
 
 </html>
