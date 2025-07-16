@@ -155,8 +155,8 @@ session_start();
                         <div class="h4">- Se agregó el CRUD de las incidencias</div>
                         <div class="h4">- Se agreego modal al registro de credenciales de servidores sea un modal</div>
                         <div class="h4">- Se se agrego modal al registro de usuarios</div>
-                        
-                        
+                        <div class="h4">- Se modifico el login </div>
+                        <div class="h4">- Se agrego el sweet alert al login</div>
                     </div>
 
                 </div>

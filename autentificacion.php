@@ -41,20 +41,30 @@ $pass = $_REQUEST['pass'];
 
 require("modelo/m_usuario.php");
 $datosUsuario = ValidarUsuario($user, $pass);
+?>
 
-// SI EXISTE ESTE USUARIO
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Verificando...</title>
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+<?php
 if ($datosUsuario != null) {
-    foreach ($datosUsuario as $key => $value) {
+    foreach ($datosUsuario as $value) {
         $id_soporte     = $value['id_soporte'];
         $nombre         = $value['nombre'];
         $apellido       = $value['apellido'];
         $nombre_usuario = $value['usuario'];
         $contrasena     = $value["contrasena"];
         $id_rol         = $value["id_rol"];
-        $nombre_rol     = $value["nombre_rol"]; // ← desde tabla roles
+        $nombre_rol     = $value["nombre_rol"];
     }
 
-    // CREAR VARIABLES DE SESIÓN
     $_SESSION['autentificado']        = TRUE;
     $_SESSION['id_session']           = $id_soporte;
     $_SESSION['id_soporte']           = $id_soporte;
@@ -63,13 +73,41 @@ if ($datosUsuario != null) {
     $_SESSION['ape_session']          = $apellido;
     $_SESSION['usuario']              = $nombre_usuario;
     $_SESSION['contrasena']           = $contrasena;
-    // NUEVAS VARIABLES PARA ROL
-    $_SESSION['id_rol']  = $id_rol;
-    $_SESSION['rol']     = $nombre_rol;
+    $_SESSION['id_rol']               = $id_rol;
+    $_SESSION['rol']                  = $nombre_rol;
+    ?>
 
-    header('location: inicio.php');
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: '¡Bienvenido!',
+            text: 'Inicio de sesión correcto.',
+            confirmButtonText: 'Continuar'
+        }).then(() => {
+            window.location.href = 'inicio.php';
+        });
+    </script>
+
+<?php
 } else {
-    header('location: index.php');
+    ?>
+
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Error de autenticación',
+            text: 'Usuario o contraseña incorrectos.',
+            confirmButtonText: 'Intentar de nuevo'
+        }).then(() => {
+            window.location.href = 'index.php';
+        });
+    </script>
+
+<?php
 }
+?>
+
+</body>
+</html>
 
 ?>
