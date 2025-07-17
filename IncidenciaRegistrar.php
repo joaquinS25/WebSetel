@@ -4,6 +4,7 @@ require("modelo/m_incidencias.php");
 
 $mensaje = null;
 
+// Registrar incidencia
 if (isset($_POST['registrar'])) {
     $id_seccion = $_POST['id_seccion'];
     $nombre_afectado = $_POST['nombre_afectado'];
@@ -19,10 +20,10 @@ if (isset($_POST['registrar'])) {
 
     $mensaje = ($rpta == "SI") ? "ok" : "error";
 }
+
+// 👇 Soluciona el warning inicializando la variable
+$incidencias = ListarIncidencias() ?? [];
 ?>
-<!-- resto del HTML lo puedes mantener, actualizando los nombres de campo en el formulario -->
-
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -99,7 +100,8 @@ if (isset($_POST['registrar'])) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error al registrar',
-                    text: 'Hubo un problema al registrar el mantenimiento'
+                    text: 'Hubo un problema al registrar la incidencia',
+                    confirmButtonText: 'Aceptar'
                 });
             <?php endif; ?>
         </script>
