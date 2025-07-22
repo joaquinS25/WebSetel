@@ -3,6 +3,7 @@ session_start();
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,6 +11,7 @@ session_start();
     <title>Parque Informático - Lista</title>
     <?php require("vista/estilos.php"); ?>
 </head>
+
 <body id="page-top">
 
     <!-- Page Wrapper -->
@@ -34,7 +36,7 @@ session_start();
                 </nav>
 
                 <main>
-                <?php
+                    <?php
                     require("modelo/m_parque.php");
 
                     if (isset($_REQUEST['editar'])) {
@@ -112,9 +114,48 @@ session_start();
                         }
                     }
 
+                    // REGISTRAR
+                    if (isset($_POST['registrar'])) {
+                        $Tipo_producto = $_POST['Tipo_producto'];
+                        $nsg = $_POST['nsg'];
+                        $descripcion = $_POST['descripcion'];
+                        $NomEquipo = $_POST['NomEquipo'];
+                        $ip = $_POST['ip'];
+                        $seccion = $_POST['seccion'];
+                        $responsable = $_POST['responsable'];
+                        $AntInst = $_POST['AntInst'];
+                        $AntAct = $_POST['AntAct'];
+
+                        $rpta = RegistrarParque($Tipo_producto, $nsg, $descripcion, $NomEquipo, $ip, $seccion, $responsable, $AntInst, $AntAct);
+
+                        if ($rpta === "SI") {
+                            echo "<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'success',
+                title: '¡Registrado!',
+                text: 'El equipo fue registrado correctamente.',
+                confirmButtonColor: '#3085d6'
+            });
+        });
+        </script>";
+                        } else {
+                            echo "<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'No se pudo registrar el equipo.',
+                confirmButtonColor: '#d33'
+            });
+        });
+        </script>";
+                        }
+                    }
+
                     $parque = ListarParque();
                     require("vista/v_parque_listar.php");
-                ?>
+                    ?>
                 </main>
             </div>
 
@@ -155,4 +196,5 @@ session_start();
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </body>
+
 </html>

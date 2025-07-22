@@ -8,7 +8,12 @@
     </style>
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Parque Informatico</h1>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="h3 mb-2 text-gray-800">Parque Informatico</h1>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAgregarParque"> Agregar</button>
+    </div>
+
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
@@ -227,6 +232,81 @@
                         </script>
 
                     </tbody>
+                    <!-- MODAL AGREGAR PARQUE INFORMÁTICO -->
+                    <div class="modal fade" id="modalAgregarParque" tabindex="-1" aria-labelledby="modalAgregarParqueLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <form action="ParqueInformatico.php" method="POST">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="modalAgregarParqueLabel"><i class="bi bi-pc-display-horizontal me-2"></i>Registrar Parque Informático</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row g-3">
+                                            <div class="col-md-6">
+                                                <label class="form-label">Tipo de producto</label>
+                                                <input type="text" name="Tipo_producto" class="form-control" required>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">NSG</label>
+                                                <input type="text" name="nsg" class="form-control" required>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Descripción</label>
+                                                <input type="text" name="descripcion" class="form-control" required>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">IP (10.64.xx.xx)</label>
+                                                <input type="text" name="ip" class="form-control" required>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Dependencia</label>
+                                                <select class="form-select" name="seccion" required>
+                                                    <option value="" disabled selected>Seleccionar</option>
+                                                    <?php
+                                                    require_once("modelo/m_parque.php");
+                                                    $secciones = ListarSecciones();
+                                                    foreach ($secciones as $seccion) {
+                                                        echo "<option value='{$seccion['id_seccion']}'>{$seccion['nombre_seccion']}</option>";
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Responsable</label>
+                                                <input type="text" name="responsable" class="form-control" required>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Antivirus instalado</label>
+                                                <select class="form-select" name="AntInst" required>
+                                                    <option value="" disabled selected>Seleccionar</option>
+                                                    <option value="SI">Sí</option>
+                                                    <option value="NO">No</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Antivirus actualizado</label>
+                                                <select class="form-select" name="AntAct" required>
+                                                    <option value="" disabled selected>Seleccionar</option>
+                                                    <option value="SI">Sí</option>
+                                                    <option value="NO">No</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label class="form-label">Nombre de Equipo</label>
+                                                <input type="text" name="NomEquipo" class="form-control text-center" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                        <button type="submit" name="registrar" class="btn btn-primary">Agregar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
                 </table>
             </div>
         </div>
