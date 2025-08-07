@@ -61,7 +61,7 @@
                                 <input type="hidden" name="id_usuario" value="<?php echo $id_usuario; ?>">
                                 <td class="center">
                                     <!--button name="editar" type="submit" value="<?php echo $id_usuario; ?>" class="text-dark btn btn-sm btn-warning bi bi-pencil-square"></button-->
-                                    <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="<?php echo $id_modal;  ?>">Editar</button>
+                                    <button type="button" class="btn btn-sm btn-warning bi bi-pencil-square" data-bs-toggle="modal" data-bs-target="<?php echo $id_modal;  ?>"></button>
                                 </td>
 
 
