@@ -81,23 +81,19 @@ function ValidarUsuario($user, $pass)
 }
 
 
-function ActualizarUsuario($id_usuario, $nombre, $apellido, $usuario, $contrasena,$id_rol)
+function ActualizarUsuario($id_usuario, $nombre, $apellido, $usuario, $contrasena)
 {
     require("conexion.php");
 
-    $sql="UPDATE usuarios_soporte SET 
-    nombre = '$nombre', 
-    apellido = '$apellido',
-    usuario = '$usuario',
-    contrasena = '$contrasena',
-    id_rol = '$id_rol'
-    WHERE id_soporte = '$id_usuario'";
-    $res = mysqli_query($con, $sql);
-    if ($res) {
-        return "SI";
-    } else {
-        return "NO";
-    }
+    $sql = "UPDATE usuarios_soporte SET 
+        nombre = '$nombre', 
+        apellido = '$apellido',
+        usuario = '$usuario',
+        contrasena = '$contrasena'
+        WHERE id_soporte = '$id_usuario'";
 
-    mysqli_close(($con));
+    $res = mysqli_query($con, $sql);
+    mysqli_close($con);
+
+    return $res ? "SI" : "NO";
 }
