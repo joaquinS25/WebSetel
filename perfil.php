@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 <hr>
 
                 <!-- ID del usuario -->
-                <input type="hidden" name="id_usuario" value="<?php echo isset($_SESSION['id_usuario']) ? $_SESSION['id_usuario'] : ''; ?>">
+                <input type="hidden" name="id_usuario" value="<?php echo isset($_SESSION['id_soporte']) ? $_SESSION['id_soporte'] : ''; ?>">
 
                 <!-- Nombres -->
                 <div class="row">
