@@ -29,21 +29,6 @@ if (session_status() == PHP_SESSION_NONE) {
         background-color: #007bff !important;
     }
 </style>
-<!-- Parque informatica0 -->
-<li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-        aria-expanded="true" aria-controls="collapseTwo">
-        <i class="bi bi-pencil"></i>
-        <span>Registro</span>
-    </a>
-    <hr class="sidebar-divider">
-    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-        <div class="bg-dark py-2 collapse-inner rounded">
-            <h6 class="collapse-header text-secondary-subtle">Dependencias</h6>
-            <a class="collapse-item depe_hover text-white" href="parqueInformaticoRegistrar.php">Registrar PI</a>
-        </div>
-    </div>
-</li>
 <div class="sidebar-heading">
     Informática
 </div>
