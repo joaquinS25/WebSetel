@@ -81,7 +81,7 @@ function ValidarUsuario($user, $pass)
 }
 
 
-function ActualizarUsuario($id_usuario, $nombre, $apellido, $usuario, $contrasena)
+function ActualizarUsuario($id_usuario, $nombre, $apellido, $usuario, $contrasena,$id_rol)
 {
     require("conexion.php");
 
@@ -89,7 +89,8 @@ function ActualizarUsuario($id_usuario, $nombre, $apellido, $usuario, $contrasen
         nombre = '$nombre', 
         apellido = '$apellido',
         usuario = '$usuario',
-        contrasena = '$contrasena'
+        contrasena = '$contrasena',
+        id_rol = '$id_rol'    
         WHERE id_soporte = '$id_usuario'";
 
     $res = mysqli_query($con, $sql);

@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
 
         <div class="container containerr">
-            <form action="usuarioEditar.php" method="post">
+            <form action="perfil_editar.php" method="post">
                 <div class="row mt-5 py-3">
                     <h2>Perfil</h2>
                 </div>
@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 <!-- ID del usuario -->
                 <input type="hidden" name="id_usuario" value="<?php echo isset($_SESSION['id_soporte']) ? $_SESSION['id_soporte'] : ''; ?>">
-
+                <input type="hidden" name="id_rol" value="<?php echo $_SESSION['id_rol']; ?>">
                 <!-- Nombres -->
                 <div class="row">
                     <label for="nombreid">Nombres</label>
@@ -123,7 +123,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <label for="contraid">Contraseña</label>
                 </div>
                 <div class="row col-3">
-                    <input class="editable form-control inputd" type="text" id="contraid" name="contrasena" readonly 
+                    <input class="editable form-control inputd" type="password" id="contraid" name="contrasena" readonly 
                         value="<?php echo isset($_SESSION['contrasena']) ? $_SESSION['contrasena'] : ''; ?>">
                 </div>
 
@@ -134,7 +134,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <a type="button" class="btn btn-secondary me-5" id="editable">Editar</a>
                         <a href="inicio.php" class="btn btn-secondary" id="regresable">Regresar</a>
                         <a type="button" class="btn btn-secondary hidden" id="cancelable">Cancelar</a>
-                        <button type="submit" name="actualizar" class="btn btn-secondary hidden" id="guardable">Guardar</button>
+                        <button type="submit" name="actualizarPerfil" class="btn btn-secondary hidden" id="guardable">Guardar</button>
                     </div>
                 </div>
             </form>

@@ -8,8 +8,9 @@ if (isset($_POST['actualizar'])) {
     $apellido = $_POST['apellido'];
     $usuario = $_POST['usuario'];
     $contrasena = $_POST['contrasena'];
+    $id_rol = $_POST['id_rol'];
 
-    $rpta = ActualizarUsuario($id_usuario, $nombre, $apellido, $usuario, $contrasena);
+    $rpta = ActualizarUsuario($id_usuario, $nombre, $apellido, $usuario, $contrasena,$id_rol);
 
     if ($rpta == "SI") {
         // ACTUALIZAR SESIÓN
@@ -17,14 +18,14 @@ if (isset($_POST['actualizar'])) {
         $_SESSION['ape_session'] = $apellido;
         $_SESSION['usuario'] = $usuario;
         $_SESSION['contrasena'] = $contrasena;
-
-        echo "<script>alert('SE ACTUALIZÓ CORRECTAMENTE'); location.href='perfil.php';</script>";
+        $_SESSION['id_rol'] = $id_rol;
+        echo "<script>alert('SE ACTUALIZÓ CORRECTAMENTE'); location.href='usuario_listar.php';</script>";
         exit;
     } else {
         echo "<script>alert('ERROR AL ACTUALIZAR'); history.back();</script>";
         exit;
     }
 } else {
-    echo "<script>alert('ACCESO NO VÁLIDO'); location.href='perfil.php';</script>";
+    echo "<script>alert('ACCESO NO VÁLIDO'); location.href='usuario_listar.php';</script>";
     exit;
 }
