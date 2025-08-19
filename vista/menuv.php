@@ -82,6 +82,7 @@ if (session_status() == PHP_SESSION_NONE) {
             <a class="collapse-item depe_hover text-white" href="mantenimiento.php">Listar Mantenimiento</a>
             <a class="collapse-item depe_hover text-white" href="Incidencia.php"> Lista de Incidencias</a>
             <a class="collapse-item depe_hover text-white" href="ComputadorasDonadas.php"> Computadoras Donadas</a>
+            <a class="collapse-item depe_hover text-white" href="ComputadorasInternadas.php"> Computadoras Internadas</a>
             
             
             
