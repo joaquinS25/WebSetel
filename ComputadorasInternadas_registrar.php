@@ -31,55 +31,41 @@ session_start();
 
                 <main>
                     <?php
-                    require("modelo/m_ComputadorasDonadas.php");
+                    require("modelo/m_ComputadorasInternadas.php");
 
                     if (isset($_REQUEST['registrar'])) {
                         // Validar que todas las variables existan antes de usarlas
-                        $EncCompDonadas     = $_REQUEST['EncCompDonadas'] ?? '';
-                        $NSGCompDonadas     = $_REQUEST['NSGCompDonadas'] ?? '';
-                        $DepCompDonadas     = $_REQUEST['DepCompDonadas'] ?? '';
-                        $ProbCompDonadas    = $_REQUEST['ProbCompDonadas'] ?? '';
-                        $EstadiaCompDonadas = $_REQUEST['EstadiaCompDonadas'] ?? '';
-                        $UsuAsigCompDonadas = $_REQUEST['UsuAsigCompDonadas'] ?? '';
-                        $DescCompDonadas    = $_REQUEST['DescCompDonadas'] ?? '';
-                        $ProcCompDonadas    = $_REQUEST['ProcCompDonadas'] ?? '';
-                        $GenCompDonadas     = $_REQUEST['GenCompDonadas'] ?? '';
-                        $RAMCompDonadas     = $_REQUEST['RAMCompDonadas'] ?? '';
-                        $DiscoDuroCompDonadas = $_REQUEST['DiscoDuroCompDonadas'] ?? '';
-                        $ModCompDonadas     = $_REQUEST['ModCompDonadas'] ?? '';
-                        $OBSCompDonadas     = $_REQUEST['OBSCompDonadas'] ?? '';
+                        $NSG_compInter     = $_REQUEST['NSG_compInter'] ?? '';
+                        $resp_compInter     = $_REQUEST['resp_compInter'] ?? '';
+                        $id_seccion = $_REQUEST['id_seccion'] ?? '';
+                        $probl_compInter    = $_REQUEST['probl_compInter'] ?? '';
+                        $compo_compInter = $_REQUEST['compo_compInter'] ?? '';
+                        $entrega_compInter = $_REQUEST['entrega_compInter'] ?? '';
                         $usuario_soporte    = $_SESSION['usuario'] ?? '';
 
                         if (!empty($usuario_soporte)) {
-                            $rpta = RegistrarComputadorasDonadas(
-                                $EncCompDonadas,
-                                $NSGCompDonadas,
-                                $DepCompDonadas,
-                                $ProbCompDonadas,
-                                $EstadiaCompDonadas,
-                                $UsuAsigCompDonadas,
-                                $DescCompDonadas,
-                                $ProcCompDonadas,
-                                $GenCompDonadas,
-                                $RAMCompDonadas,
-                                $DiscoDuroCompDonadas,
-                                $ModCompDonadas,
-                                $OBSCompDonadas,
+                            $rpta = RegistrarComputadorasInternadas(
+                                $NSG_compInter,
+                                $resp_compInter,
+                                $id_seccion,
+                                $probl_compInter,
+                                $compo_compInter,
+                                $entrega_compInter,
                                 $usuario_soporte
                             );
 
                             if ($rpta === "SI") {
-                                echo "<script>location.href='ComputadorasDonadas.php';</script>";
+                                echo "<script>location.href='ComputadorasInternadas.php';</script>";
                                 exit;
                             } else {
-                                echo "<script>alert('Error al registrar la computadora donada');</script>";
+                                echo "<script>alert('Error al registrar la computadora internada');</script>";
                             }
                         } else {
                             echo "<script>alert('Usuario de soporte no definido en sesión');</script>";
                         }
                     }
-
-                    require("vista/v_ComputadorasDonadas_registrar.php");
+                    $computadorasInternadas = ListarComputadorasInternadas();
+                    require("vista/v_ComputadorasInternadas_lista.php");
                     ?>
                 </main>
             </div>
