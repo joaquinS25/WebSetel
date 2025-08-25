@@ -13,21 +13,12 @@ session_start();
 </head>
 
 <body id="page-top">
-
-    <!-- Page Wrapper -->
     <div id="wrapper">
-
-        <!-- Sidebar -->
         <?php require("vista/menuv.php"); ?>
-        <!-- End of Sidebar -->
 
-        <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
-
-            <!-- Main Content -->
             <div id="content">
 
-                <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-dark topbar mb-4 static-top shadow">
                     <?php
                     require("vista/buzqueda.php");
@@ -39,127 +30,126 @@ session_start();
                     <?php
                     require("modelo/m_parque.php");
 
-                    if (isset($_REQUEST['editar'])) {
-                        $id_equipo = $_REQUEST['editar'];
-                        echo "<script>location.href='parqueInformaticoEditar.php?id_equipo={$id_equipo}';</script>";
-                    }
-
-                    // ELIMINAR
-                    else if (isset($_REQUEST['eliminar'])) {
-                        $id_equipo = $_REQUEST['eliminar'];
+                    /* ===================== ELIMINAR ===================== */
+                    if (isset($_POST['eliminar'])) {
+                        $id_equipo = $_POST['eliminar'];
                         $rpta = EliminarParque($id_equipo);
 
                         if ($rpta === "SI") {
                             echo "<script>
-                            document.addEventListener('DOMContentLoaded', function() {
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: '¡Eliminado!',
-                                    text: 'El registro fue eliminado correctamente.',
-                                    confirmButtonColor: '#3085d6'
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    Swal.fire({icon:'success',title:'¡Eliminado!',text:'El registro fue eliminado correctamente.',confirmButtonColor:'#3085d6'});
                                 });
-                            });
                             </script>";
                         } else {
                             echo "<script>
-                            document.addEventListener('DOMContentLoaded', function() {
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Error',
-                                    text: 'No se pudo eliminar el registro.',
-                                    confirmButtonColor: '#d33'
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    Swal.fire({icon:'error',title:'Error',text:'No se pudo eliminar el registro.',confirmButtonColor:'#d33'});
                                 });
-                            });
                             </script>";
                         }
                     }
 
-                    // ACTUALIZAR
-                    else if (isset($_REQUEST['actualizar'])) {
-                        $id_equipo = $_REQUEST['id_equipo'];
-                        $tipo_producto = $_REQUEST['tipo_producto'];
-                        $nsg = $_REQUEST['nsg'];
-                        $descripcion = $_REQUEST['descripcion'];
-                        $nombre_equipo = $_REQUEST['nombre_equipo'];
-                        $ip = $_REQUEST['ip'];
-                        $id_seccion = $_REQUEST['seccion'];
-                        $responsable = $_REQUEST['responsable'];
-                        $antivirus_instalado = $_REQUEST['antivirus_instalado'];
-                        $antivirus_activo = $_REQUEST['antivirus_activo'];
+                    /* ===================== ACTUALIZAR ===================== */
+                    if (isset($_POST['actualizar'])) {
+                        $id_equipo     = $_POST['id_equipo'];
+                        $id_seccion    = $_POST['id_seccion'];
+                        $tipo_articulo = $_POST['tipo_articulo'];
+                        $grado         = $_POST['grado'];
+                        $responsable   = $_POST['responsable'];
+                        $cip_dni       = $_POST['cip_dni'];
+                        $cargo_fuera   = $_POST['cargo_fuera'];
+                        $nsg           = $_POST['nsg'];
+                        $descripcion   = $_POST['descripcion_articulo'];
+                        $marca         = $_POST['marca'];
+                        $procesador    = $_POST['procesador'];
+                        $generacion    = $_POST['generacion'];
+                        $ram           = $_POST['ram'];
+                        $ssd           = $_POST['ssd'];
+                        $hdd           = $_POST['hdd'];
+                        $so            = $_POST['so'];
+                        $antivirus     = $_POST['antivirus'];
+                        $situacion     = $_POST['situacion'];
+                        $ip            = $_POST['ip'];
+                        $chasqui       = $_POST['chasqui'];
+                        $mac           = $_POST['mac'];
+                        $nombre_equipo = $_POST['nombre_equipo'];
+                        $origen        = $_POST['origen'];
 
-                        $rpta = ActualizarParque($id_equipo, $tipo_producto, $nsg, $descripcion, $nombre_equipo, $ip, $id_seccion, $responsable, $antivirus_instalado, $antivirus_activo);
+                        $rpta = ActualizarParque(
+                            $id_equipo,$id_seccion,$tipo_articulo,$grado,$responsable,$cip_dni,$cargo_fuera,$nsg,$descripcion,
+                            $marca,$procesador,$generacion,$ram,$ssd,$hdd,$so,$antivirus,$situacion,$ip,$chasqui,$mac,$nombre_equipo,$origen
+                        );
 
                         if ($rpta === "SI") {
                             echo "<script>
-                            document.addEventListener('DOMContentLoaded', function() {
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: '¡Actualizado!',
-                                    text: 'El equipo fue actualizado correctamente.',
-                                    confirmButtonColor: '#3085d6'
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    Swal.fire({icon:'success',title:'¡Actualizado!',text:'El registro fue actualizado correctamente.',confirmButtonColor:'#3085d6'});
                                 });
-                            });
                             </script>";
                         } else {
                             echo "<script>
-                            document.addEventListener('DOMContentLoaded', function() {
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Error',
-                                    text: 'No se pudo actualizar el equipo.',
-                                    confirmButtonColor: '#d33'
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    Swal.fire({icon:'error',title:'Error',text:'No se pudo actualizar el registro.',confirmButtonColor:'#d33'});
                                 });
-                            });
                             </script>";
                         }
                     }
 
-                    // REGISTRAR
+                    /* ===================== REGISTRAR ===================== */
                     if (isset($_POST['registrar'])) {
-                        $Tipo_producto = $_POST['Tipo_producto'];
-                        $nsg = $_POST['nsg'];
-                        $descripcion = $_POST['descripcion'];
-                        $NomEquipo = $_POST['NomEquipo'];
-                        $ip = $_POST['ip'];
-                        $seccion = $_POST['seccion'];
-                        $responsable = $_POST['responsable'];
-                        $AntInst = $_POST['AntInst'];
-                        $AntAct = $_POST['AntAct'];
+                        $id_seccion    = $_POST['id_seccion'];
+                        $tipo_articulo = $_POST['tipo_articulo'];
+                        $grado         = $_POST['grado'];
+                        $responsable   = $_POST['responsable'];
+                        $cip_dni       = $_POST['cip_dni'];
+                        $cargo_fuera   = $_POST['cargo_fuera'];
+                        $nsg           = $_POST['nsg'];
+                        $descripcion   = $_POST['descripcion_articulo'];
+                        $marca         = $_POST['marca'];
+                        $procesador    = $_POST['procesador'];
+                        $generacion    = $_POST['generacion'];
+                        $ram           = $_POST['ram'];
+                        $ssd           = $_POST['ssd'];
+                        $hdd           = $_POST['hdd'];
+                        $so            = $_POST['so'];
+                        $antivirus     = $_POST['antivirus'];
+                        $situacion     = $_POST['situacion'];
+                        $ip            = $_POST['ip'];
+                        $chasqui       = $_POST['chasqui'];
+                        $mac           = $_POST['mac'];
+                        $nombre_equipo = $_POST['nombre_equipo'];
+                        $origen        = $_POST['origen'];
 
-                        $rpta = RegistrarParque($Tipo_producto, $nsg, $descripcion, $NomEquipo, $ip, $seccion, $responsable, $AntInst, $AntAct);
+                        $rpta = RegistrarParque(
+                            $id_seccion,$tipo_articulo,$grado,$responsable,$cip_dni,$cargo_fuera,$nsg,$descripcion,
+                            $marca,$procesador,$generacion,$ram,$ssd,$hdd,$so,$antivirus,$situacion,$ip,$chasqui,$mac,$nombre_equipo,$origen
+                        );
 
                         if ($rpta === "SI") {
                             echo "<script>
-        document.addEventListener('DOMContentLoaded', function() {
-            Swal.fire({
-                icon: 'success',
-                title: '¡Registrado!',
-                text: 'El equipo fue registrado correctamente.',
-                confirmButtonColor: '#3085d6'
-            });
-        });
-        </script>";
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    Swal.fire({icon:'success',title:'¡Registrado!',text:'El registro fue agregado correctamente.',confirmButtonColor:'#3085d6'});
+                                });
+                            </script>";
                         } else {
                             echo "<script>
-        document.addEventListener('DOMContentLoaded', function() {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'No se pudo registrar el equipo.',
-                confirmButtonColor: '#d33'
-            });
-        });
-        </script>";
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    Swal.fire({icon:'error',title:'Error',text:'No se pudo registrar el equipo.',confirmButtonColor:'#d33'});
+                                });
+                            </script>";
                         }
                     }
 
-                    $parque = ListarParque();
+                    /* ===================== DATOS PARA LA VISTA ===================== */
+                    $secciones = ListarSecciones();
+                    $parque    = ListarParque();
+
                     require("vista/v_parque_listar.php");
                     ?>
                 </main>
             </div>
 
-            <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
@@ -170,31 +160,7 @@ session_start();
         </div>
     </div>
 
-    <!-- Modal de salida -->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">¿Seguro que quiere salir?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Cerrar">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Seleccione "Salir" para finalizar su sesión.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                    <a class="btn btn-primary" href="index.php">Salir</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <?php require("vista/scripts.php"); ?>
-
-    <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 </body>
-
 </html>

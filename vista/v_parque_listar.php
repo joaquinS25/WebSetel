@@ -1,19 +1,15 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
     <style>
-        .center {
-            text-align: center;
-            justify-content: center;
-        }
+        .center { text-align: center; justify-content: center; }
+        .nowrap { white-space: nowrap; }
     </style>
 
     <!-- Page Heading -->
-
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1 class="h3 mb-2 text-gray-800">Parque Informatico</h1>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAgregarParque"> Agregar</button>
+        <h1 class="h3 mb-2 text-gray-800">Parque Informático</h1>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAgregarParque">Agregar</button>
     </div>
-
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
@@ -25,291 +21,353 @@
                 <table class="table table-bordered table-borderless" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th class="table-secondary center">ID</th>
-                            <th class="table-secondary center">Tipo de artículo</th>
-                            <th class="table-secondary center">NSG</th>
-                            <th class="table-secondary center">Descripción</th>
-                            <th class="table-secondary center">Nombre de equipo</th>
-                            <th class="table-secondary center">IP</th>
+                            <th class="table-secondary center">#</th>
+                            <th class="table-secondary center">Fecha Creación / Creador</th>
                             <th class="table-secondary center">Sección</th>
+                            <th class="table-secondary center">Grado</th>
                             <th class="table-secondary center">Responsable</th>
-                            <th class="table-secondary center">Antivirus Instalado</th>
-                            <th class="table-secondary center">Antivirus Actualizado</th>
+                            <th class="table-secondary center">CIP / DNI</th>
+                            <th class="table-secondary center">Cargo o fuera de cargos</th>
+                            <th class="table-secondary center">NSG</th>
+                            <th class="table-secondary center">Descripción del artículo</th>
+                            <th class="table-secondary center">Marca</th>
+                            <th class="table-secondary center">Procesador</th>
+                            <th class="table-secondary center">Generación</th>
+                            <th class="table-secondary center">RAM</th>
+                            <th class="table-secondary center">SSD</th>
+                            <th class="table-secondary center">HDD</th>
+                            <th class="table-secondary center">SO</th>
+                            <th class="table-secondary center">Antivirus</th>
+                            <th class="table-secondary center">Situación</th>
+                            <th class="table-secondary center">IP</th>
+                            <th class="table-secondary center">Chasqui</th>
+                            <th class="table-secondary center">MAC</th>
+                            <th class="table-secondary center">Nombre de equipo</th>
+                            <th class="table-secondary center">Origen</th>
+                            <th class="table-secondary center">Última Modificación</th>
                             <th class="table-secondary center">Editar</th>
                             <th class="table-secondary center">Eliminar</th>
-
-
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                         $n = 0;
-                        foreach ($parque as $hey => $value) {
+                        foreach ($parque as $value) {
                             $n++;
-                            $id_equipo = $value['id_equipo'];
-                            $tipo_articulo = $value['tipo_articulo'];
-                            $nsg = $value['nsg'];
-                            $descripcion = $value['descripcion'];
-                            $nombre_equipo = $value['nombre_equipo'];
-                            $ip = $value['ip'];
-                            $nombre_seccion = $value['nombre_seccion'];
-                            $responsable = $value['responsable'];
-                            $antivirus_instalado = $value['antivirus_instalado'];
-                            $antivirus_activo = $value['antivirus_activo'];
-                            $id_seccion = $value['id_seccion']; // ← AÑADE ESTA LÍNEA
-                            $nombre_equipo = $value['nombre_equipo'];
+                            $id_equipo      = $value['id_equipo'];
+                            $id_seccion     = $value['id_seccion'];
+                            $seccion        = $value['seccion'];
+                            $grado          = $value['grado'];
+                            $responsable    = $value['responsable'];
+                            $cip_dni        = $value['cip_dni'];
+                            $cargo          = $value['cargo_fuera'];
+                            $nsg            = $value['nsg'];
+                            $descripcion    = $value['descripcion'];
+                            $marca          = $value['marca'];
+                            $procesador     = $value['procesador'];
+                            $generacion     = $value['generacion'];
+                            $ram            = $value['ram'];
+                            $ssd            = $value['ssd'];
+                            $hdd            = $value['hdd'];
+                            $so             = $value['so'];
+                            $antivirus      = $value['antivirus'];
+                            $situacion      = $value['situacion'];
+                            $ip             = $value['ip'];
+                            $chasqui        = $value['chasqui'];
+                            $mac            = $value['mac'];
+                            $nombre_equipo  = $value['nombre_equipo'];
+                            $origen         = $value['origen'];
+
+                            // nuevos campos
+                            $fecha_creacion     = $value['fecha_creacion'];
+                            $creador            = $value['creador'];
+                            $fecha_modificacion = $value['fecha_modificacion'];
+                            $modificador        = $value['modificador'];
+
                             $id_modal = "#modal" . $id_equipo;
-                            $modal = "modal" . $id_equipo;
-                            // Aquí inicializamos los valores que necesitas en el formulario
-                            $ai1 = $antivirus_instalado == "SI" ? "selected" : "";
-                            $ai0 = $antivirus_instalado == "NO" ? "selected" : "";
-                            $aac1 = $antivirus_activo == "SI" ? "selected" : "";
-                            $aac0 = $antivirus_activo == "NO" ? "selected" : "";
-
-
-
+                            $modal    = "modal" . $id_equipo;
                         ?>
                             <tr>
                                 <td class="center"><?php echo $n; ?></td>
-                                <td class="center"><?php echo $tipo_articulo; ?></td>
+                                <td class="center">
+                                    <?php
+                                    if (!empty($fecha_creacion)) {
+                                        echo $fecha_creacion . "<br><b>Por: " . (!empty($creador) ? $creador : '—') . "</b>";
+                                    } else {
+                                        echo "—";
+                                    }
+                                    ?>
+                                </td>
+                                <td class="center"><?php echo $seccion; ?></td>
+                                <td class="center"><?php echo $grado; ?></td>
+                                <td class="center"><?php echo $responsable; ?></td>
+                                <td class="center nowrap"><?php echo $cip_dni; ?></td>
+                                <td class="center"><?php echo $cargo; ?></td>
                                 <td class="center"><?php echo $nsg; ?></td>
                                 <td class="center"><?php echo $descripcion; ?></td>
+                                <td class="center"><?php echo $marca; ?></td>
+                                <td class="center"><?php echo $procesador; ?></td>
+                                <td class="center"><?php echo $generacion; ?></td>
+                                <td class="center"><?php echo $ram; ?></td>
+                                <td class="center"><?php echo $ssd; ?></td>
+                                <td class="center"><?php echo $hdd; ?></td>
+                                <td class="center"><?php echo $so; ?></td>
+                                <td class="center"><?php echo $antivirus; ?></td>
+                                <td class="center"><?php echo $situacion; ?></td>
+                                <td class="center nowrap"><?php echo $ip; ?></td>
+                                <td class="center"><?php echo $chasqui; ?></td>
+                                <td class="center nowrap"><?php echo $mac; ?></td>
                                 <td class="center"><?php echo $nombre_equipo; ?></td>
-                                <td class="center"><?php echo $ip; ?></td>
-                                <td class="center"><?php echo $nombre_seccion; ?></td>
-                                <td class="center"><?php echo $responsable; ?></td>
-                                <td class="center"><?php echo $antivirus_instalado; ?></td>
-                                <td class="center"><?php echo $antivirus_activo; ?></td>
-
-
+                                <td class="center"><?php echo $origen; ?></td>
                                 <td class="center">
-                                    <!--button name="editar" type="submit" value="<?php echo $id_equipo; ?>" class="text-dark btn btn-sm btn-warning bi bi-pencil-square"></button-->
-                                    <button type="button" class="btn btn-sm btn-warning bi bi-pencil-square" data-bs-toggle="modal" data-bs-target="<?php echo $id_modal;  ?>"></button>
+                                    <?php
+                                    if (!empty($fecha_modificacion)) {
+                                        echo $fecha_modificacion . "<br><b>Por: " . (!empty($modificador) ? $modificador : '—') . "</b>";
+                                    } else {
+                                        echo "—";
+                                    }
+                                    ?>
                                 </td>
-                                <form action="ParqueInformatico.php" method="post">
-                                    <td class="center">
-                                        <!--button name="eliminar" type="submit"  value="<?php echo $id_equipo; ?>" class="text-dark btn btn-sm btn-danger bi bi-trash3" onclick="return confirm('Estas seguro de eliminar?');"></button-->
-                                        <button type="button" class="text-dark btn btn-sm btn-danger bi bi-trash3" onclick="confirmarEliminacion(<?php echo $id_equipo; ?>)"></button>
-                                    </td>
-                                </form>
+                                <td class="center">
+                                    <button type="button" class="btn btn-sm btn-warning bi bi-pencil-square" data-bs-toggle="modal" data-bs-target="<?php echo $id_modal; ?>"></button>
+                                </td>
+                                <td class="center">
+                                    <button type="button" class="text-dark btn btn-sm btn-danger bi bi-trash3" onclick="confirmarEliminacion(<?php echo $id_equipo; ?>)"></button>
+                                </td>
                             </tr>
 
-                            <!--MODAL-->
-                            <div class="modal fade" id="<?php echo $modal;  ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
+                            <!-- MODAL EDITAR -->
+                            <div class="modal fade" id="<?php echo $modal; ?>" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog modal-xl">
                                     <div class="modal-content">
                                         <form action="ParqueInformatico.php" method="post">
                                             <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Cliente</h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                <h5 class="modal-title">Editar Registro</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                             </div>
-
                                             <div class="modal-body">
-
-                                                <div class="d-flex">
-                                                    <div class="mb-3">
-                                                        <input type="hidden" name="id_equipo" value="<?php echo $id_equipo; ?>">
-                                                        <label for="formGroupExampleInput" class="form-label">Tipo de producto</label>
-                                                        <input type="text" name="tipo_producto" value="<?php echo $tipo_articulo; ?>" class="form-control" aria-label="TIPO DE PRODUCTO" required="required">
-                                                        <br>
-                                                    </div>
-                                                    <div class="mb-3 ms-3">
-                                                        <label for="formGroupExampleInput" class="form-label">Dependencia</label>
-                                                        <select class="form-select" name="seccion" aria-label="Default select example" id="formGroupExampleInput" required>
-                                                            <!--option value="" class="bg-secondary">Seleccionar</option-->
-                                                            <?php
-                                                            require_once("modelo/m_parque.php");
-                                                            $secciones = ListarSecciones();
-                                                            foreach ($secciones as $seccion) {
-
-                                                                $selected = (isset($id_seccion) && $seccion['id_seccion'] == $id_seccion) ? "selected" : "";
-                                                                echo "<option value='" . $seccion['id_seccion'] . "' $selected>" . htmlspecialchars($seccion['nombre_seccion']) . "</option>";
-                                                            }
-                                                            ?>
-
-                                                        </select>
-
-                                                        <br>
-                                                    </div>
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label for="formGroupExampleInput" class="form-label">NSG</label>
-                                                    <input type="text" name="nsg" value="<?php echo $nsg; ?>" class="form-control" aria-label="NSG" required="required">
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="formGroupExampleInput" class="form-label">Descripción</label>
-                                                    <input type="text" name="descripcion" value="<?php echo $descripcion; ?>" class="form-control" aria-label="DESCRIPCION" required="required">
-                                                    <br>
-                                                </div>
-
-
-
-
-                                                <div class="mb-3">
-                                                    <label for="formGroupExampleInput" class="form-label">Responsable</label>
-                                                    <input type="text" name="responsable" value="<?php echo $responsable; ?>" class="form-control" aria-label="RESPONSABLE" required="required">
-                                                </div>
-
-                                                <div class="row">
-                                                    <div class="col-6">
-                                                        <label for="formGroupExampleInput" class="form-label">Antivirus instalado</label>
-                                                        <select name="antivirus_instalado" class="form-control">
-                                                            <option value="SI" <?= $ai1 ?>>Sí</option>
-                                                            <option value="NO" <?= $ai0 ?>>No</option>
-                                                        </select>
-
-                                                        <br>
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <label for="formGroupExampleInput" class="form-label">Antivirus actualizado</label>
-                                                        <select name="antivirus_activo" class="form-control">
-                                                            <option value="SI" <?= $aac1 ?>>Sí</option>
-                                                            <option value="NO" <?= $aac0 ?>>No</option>
+                                                <input type="hidden" name="id_equipo" value="<?php echo $id_equipo; ?>">
+                                                <div class="row g-3">
+                                                    <div class="col-md-6">
+                                                        <label class="form-label">Sección</label>
+                                                        <select name="id_seccion" class="form-control" required>
+                                                            <option value="">Seleccione...</option>
+                                                            <?php foreach ($secciones as $s) { ?>
+                                                                <option value="<?php echo $s['id_seccion']; ?>" <?php if ($s['nombre_seccion'] == $seccion) echo "selected"; ?>>
+                                                                    <?php echo $s['nombre_seccion']; ?>
+                                                                </option>
+                                                            <?php } ?>
                                                         </select>
                                                     </div>
-                                                </div>
-
-                                                <div class="row">
-                                                    <div class="col-6">
-                                                        <label for="formGroupExampleInput" class="form-label">IP (10.64.xx.xx)</label>
-                                                        <input type="text" name="ip" value="<?php echo $ip; ?>" class="form-control" aria-label="IP" required="required">
+                                                    <div class="col-md-6">
+                                                        <label class="form-label">Tipo de Artículo</label>
+                                                        <input type="text" name="tipo_articulo" value="<?php echo $value['tipo_articulo']; ?>" class="form-control" required>
                                                     </div>
-                                                    <div class="col-6">
-                                                        <label for="formGroupExampleInput" class="form-label">Nombre de Equipo</label>
-                                                        <input type="text" name="nombre_equipo" value="<?php echo $nombre_equipo; ?>" class="form-control" aria-label="NOMBRE EQUIPO" required="required">
-                                                        <br>
-                                                    </div>
+                                                    <div class="col-md-6"><label class="form-label">Grado</label><input type="text" name="grado" value="<?php echo $grado; ?>" class="form-control" required></div>
+                                                    <div class="col-md-6"><label class="form-label">Responsable</label><input type="text" name="responsable" value="<?php echo $responsable; ?>" class="form-control" required></div>
+                                                    <div class="col-md-6"><label class="form-label">CIP/DNI</label><input type="text" name="cip_dni" value="<?php echo $cip_dni; ?>" class="form-control" required></div>
+                                                    <div class="col-md-6"><label class="form-label">Cargo</label><input type="text" name="cargo_fuera" value="<?php echo $cargo; ?>" class="form-control" required></div>
+                                                    <div class="col-md-6"><label class="form-label">NSG</label><input type="text" name="nsg" value="<?php echo $nsg; ?>" class="form-control"></div>
+                                                    <div class="col-md-6"><label class="form-label">Descripción</label><input type="text" name="descripcion_articulo" value="<?php echo $descripcion; ?>" class="form-control" required></div>
+                                                    <div class="col-md-6"><label class="form-label">Marca</label><input type="text" name="marca" value="<?php echo $marca; ?>" class="form-control"></div>
+                                                    <div class="col-md-6"><label class="form-label">Procesador</label><input type="text" name="procesador" value="<?php echo $procesador; ?>" class="form-control"></div>
+                                                    <div class="col-md-6"><label class="form-label">Generación</label><input type="text" name="generacion" value="<?php echo $generacion; ?>" class="form-control"></div>
+                                                    <div class="col-md-6"><label class="form-label">RAM</label><input type="text" name="ram" value="<?php echo $ram; ?>" class="form-control"></div>
+                                                    <div class="col-md-6"><label class="form-label">SSD</label><input type="text" name="ssd" value="<?php echo $ssd; ?>" class="form-control"></div>
+                                                    <div class="col-md-6"><label class="form-label">HDD</label><input type="text" name="hdd" value="<?php echo $hdd; ?>" class="form-control"></div>
+                                                    <div class="col-md-6"><label class="form-label">SO</label><input type="text" name="so" value="<?php echo $so; ?>" class="form-control"></div>
+                                                    <div class="col-md-6"><label class="form-label">Antivirus</label><input type="text" name="antivirus" value="<?php echo $antivirus; ?>" class="form-control"></div>
+                                                    <div class="col-md-6"><label class="form-label">Situación</label><input type="text" name="situacion" value="<?php echo $situacion; ?>" class="form-control"></div>
+                                                    <div class="col-md-6"><label class="form-label">IP</label><input type="text" name="ip" value="<?php echo $ip; ?>" class="form-control"></div>
+                                                    <div class="col-md-6"><label class="form-label">Chasqui</label><input type="text" name="chasqui" value="<?php echo $chasqui; ?>" class="form-control"></div>
+                                                    <div class="col-md-6"><label class="form-label">MAC</label><input type="text" name="mac" value="<?php echo $mac; ?>" class="form-control"></div>
+                                                    <div class="col-md-6"><label class="form-label">Nombre Equipo</label><input type="text" name="nombre_equipo" value="<?php echo $nombre_equipo; ?>" class="form-control"></div>
+                                                    <div class="col-md-6"><label class="form-label">Origen</label><input type="text" name="origen" value="<?php echo $origen; ?>" class="form-control"></div>
                                                 </div>
-
                                             </div>
-
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                                <button type="submit" name="actualizar" value="<?php echo $id_equipo; ?>" class="btn btn-primary">Actualizar</button>
+                                                <button type="submit" name="actualizar" value="1" class="btn btn-primary">Actualizar</button>
                                             </div>
                                         </form>
                                     </div>
                                 </div>
                             </div>
-
-                            <!--MODAL-->
-
-                        <?php
-                        }
-                        ?>
-
-                        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-                        <script>
-                            function confirmarEliminacion(id) {
-                                Swal.fire({
-                                    title: '¿Estás seguro?',
-                                    text: "¡No podrás revertir esto!",
-                                    icon: 'warning',
-                                    showCancelButton: true,
-                                    confirmButtonColor: '#d33',
-                                    cancelButtonColor: '#6c757d',
-                                    confirmButtonText: 'Sí, eliminar',
-                                    cancelButtonText: 'Cancelar'
-                                }).then((result) => {
-                                    if (result.isConfirmed) {
-                                        // Crear formulario y enviarlo por POST
-                                        const form = document.createElement('form');
-                                        form.method = 'POST';
-                                        form.action = 'ParqueInformatico.php';
-
-                                        const input = document.createElement('input');
-                                        input.type = 'hidden';
-                                        input.name = 'eliminar';
-                                        input.value = id;
-
-                                        form.appendChild(input);
-                                        document.body.appendChild(form);
-                                        form.submit();
-                                    }
-                                });
-                            }
-                        </script>
-
+                        <?php } ?>
                     </tbody>
-                    <!-- MODAL AGREGAR PARQUE INFORMÁTICO -->
-                    <div class="modal fade" id="modalAgregarParque" tabindex="-1" aria-labelledby="modalAgregarParqueLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <form action="ParqueInformatico.php" method="POST">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="modalAgregarParqueLabel"><i class="bi bi-pc-display-horizontal me-2"></i>Registrar Parque Informático</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="row g-3">
-                                            <div class="col-md-6">
-                                                <label class="form-label">Tipo de producto</label>
-                                                <input type="text" name="Tipo_producto" class="form-control" required>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label class="form-label">NSG</label>
-                                                <input type="text" name="nsg" class="form-control" required>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label class="form-label">Descripción</label>
-                                                <input type="text" name="descripcion" class="form-control" required>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label class="form-label">IP (10.64.xx.xx)</label>
-                                                <input type="text" name="ip" class="form-control" required>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label class="form-label">Dependencia</label>
-                                                <select class="form-select" name="seccion" required>
-                                                    <option value="" disabled selected>Seleccionar</option>
-                                                    <?php
-                                                    require_once("modelo/m_parque.php");
-                                                    $secciones = ListarSecciones();
-                                                    foreach ($secciones as $seccion) {
-                                                        echo "<option value='{$seccion['id_seccion']}'>{$seccion['nombre_seccion']}</option>";
-                                                    }
-                                                    ?>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label class="form-label">Responsable</label>
-                                                <input type="text" name="responsable" class="form-control" required>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label class="form-label">Antivirus instalado</label>
-                                                <select class="form-select" name="AntInst" required>
-                                                    <option value="" disabled selected>Seleccionar</option>
-                                                    <option value="SI">Sí</option>
-                                                    <option value="NO">No</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label class="form-label">Antivirus actualizado</label>
-                                                <select class="form-select" name="AntAct" required>
-                                                    <option value="" disabled selected>Seleccionar</option>
-                                                    <option value="SI">Sí</option>
-                                                    <option value="NO">No</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <label class="form-label">Nombre de Equipo</label>
-                                                <input type="text" name="NomEquipo" class="form-control text-center" required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                        <button type="submit" name="registrar" class="btn btn-primary">Agregar</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
                 </table>
             </div>
         </div>
     </div>
+</div>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function confirmarEliminacion(id) {
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "¡No podrás revertir esto!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = 'ParqueInformatico.php';
+
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'eliminar';
+                input.value = id;
+
+                form.appendChild(input);
+                document.body.appendChild(form);
+                form.submit();
+            }
+        });
+    }
+</script>
+
+<!-- Modal Agregar Parque Informático -->
+<div class="modal fade" id="modalAgregarParque" tabindex="-1" aria-labelledby="modalAgregarParqueLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="modalAgregarParqueLabel">Agregar Registro al Parque Informático</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+
+            <form id="formAgregarParque" method="POST" action="ParqueInformatico.php">
+                <div class="modal-body">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Sección</label>
+                            <select name="id_seccion" class="form-control" required>
+                                <option value="">Seleccione...</option>
+                                <?php foreach ($secciones as $s) { ?>
+                                    <option value="<?php echo $s['id_seccion']; ?>">
+                                        <?php echo $s['nombre_seccion']; ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Tipo de Artículo</label>
+                            <input type="text" class="form-control" name="tipo_articulo" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Grado</label>
+                            <input type="text" class="form-control" name="grado" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Responsable</label>
+                            <input type="text" class="form-control" name="responsable" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">CIP / DNI</label>
+                            <input type="text" class="form-control" name="cip_dni" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Cargo o fuera de cargos</label>
+                            <input type="text" class="form-control" name="cargo_fuera" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">NSG</label>
+                            <input type="text" class="form-control" name="nsg">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Descripción del artículo</label>
+                            <input type="text" class="form-control" name="descripcion_articulo" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Marca</label>
+                            <input type="text" class="form-control" name="marca">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Procesador</label>
+                            <input type="text" class="form-control" name="procesador">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Generación</label>
+                            <input type="text" class="form-control" name="generacion">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">RAM</label>
+                            <input type="text" class="form-control" name="ram">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">SSD</label>
+                            <input type="text" class="form-control" name="ssd">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">HDD</label>
+                            <input type="text" class="form-control" name="hdd">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Sistema Operativo</label>
+                            <input type="text" class="form-control" name="so">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Antivirus</label>
+                            <input type="text" class="form-control" name="antivirus">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Situación</label>
+                            <input type="text" class="form-control" name="situacion">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">IP</label>
+                            <input type="text" class="form-control" name="ip">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Chasqui</label>
+                            <input type="text" class="form-control" name="chasqui">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">MAC</label>
+                            <input type="text" class="form-control" name="mac">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Nombre de Equipo</label>
+                            <input type="text" class="form-control" name="nombre_equipo">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Origen</label>
+                            <input type="text" class="form-control" name="origen">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" name="registrar" class="btn btn-success">Guardar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
