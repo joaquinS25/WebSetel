@@ -27,17 +27,17 @@ function ListarIncidencias()
     return $datos;
 }
 
-function RegistrarIncidencia($id_seccion, $nombre_afectado, $problema, $tipo, $estado, $fecha_inicio, $fecha_culminacion, $observaciones, $id_soporte_creacion)
+function RegistrarIncidencia($id_seccion, $nombre_afectado, $problema, $fecha_inicio, $observaciones, $id_soporte_creacion)
 {
     require("conexion.php");
 
     $sql = "INSERT INTO incidencias (
-                id_seccion, nombre_afectado, problema, tipo, estado,
-                fecha_inicio, fecha_culminacion, observaciones,
+                id_seccion, nombre_afectado, problema,
+                fecha_inicio, observaciones,
                 fecha_creacion, id_soporte_creacion
             ) VALUES (
-                '$id_seccion', '$nombre_afectado', '$problema', '$tipo', '$estado',
-                '$fecha_inicio', '$fecha_culminacion', '$observaciones',
+                '$id_seccion', '$nombre_afectado', '$problema',
+                '$fecha_inicio', '$observaciones',
                 NOW(), '$id_soporte_creacion'
             )";
 
@@ -50,7 +50,7 @@ function RegistrarIncidencia($id_seccion, $nombre_afectado, $problema, $tipo, $e
     return "SI";
 }
 
-function ActualizarIncidencia($id_incidencia, $id_seccion, $nombre_afectado, $problema, $tipo, $estado, $fecha_inicio, $fecha_culminacion, $observaciones, $id_soporte_modificacion)
+function ActualizarIncidencia($id_incidencia, $id_seccion, $nombre_afectado, $problema, $fecha_inicio, $observaciones, $id_soporte_modificacion)
 {
     require("conexion.php");
 
@@ -58,10 +58,7 @@ function ActualizarIncidencia($id_incidencia, $id_seccion, $nombre_afectado, $pr
                 id_seccion = '$id_seccion',
                 nombre_afectado = '$nombre_afectado',
                 problema = '$problema',
-                tipo = '$tipo',
-                estado = '$estado',
                 fecha_inicio = '$fecha_inicio',
-                fecha_culminacion = '$fecha_culminacion',
                 observaciones = '$observaciones',
                 fecha_modificacion = NOW(),
                 id_soporte_modificacion = '$id_soporte_modificacion'

@@ -20,14 +20,12 @@
                         <tr class="text-center table-secondary">
                             <th>#</th>
                             <th class="center">Fecha de Creación<br>/ Creador</th>
-                            <th class="center">Sección</th>
-                            <th class="center">Nombre Afectado</th>
-                            <th class="center">Problema</th>
-                            <th class="center">Tipo</th>
-                            <th class="center">Estado</th>
-                            <th class="center">Fecha Inicio</th>
-                            <th class="center">Fecha Culminación</th>
-                            <th class="center">Observaciones</th>
+                            <th class="center">Usuario Solicitante</th>
+                            <th class="center">Dependencia</th>
+                            <th class="center">Motivo</th>
+                            <th class="center">Servicio Realizado</th>
+                            <th class="center">Fecha</th>
+
                             <th class="center">Fecha de Modificación<br>/ Modificado por</th>
                             <th class="center">Editar</th>
                             <th class="center">Eliminar</th>
@@ -46,14 +44,12 @@
                                     <span style="font-size: 13px;"><?= date("d/m/Y H:i", strtotime($inc['fecha_creacion'])) ?></span><br>
                                     <strong>Por: <?= $inc['usuario_creador'] ?? '-' ?></strong>
                                 </td>
-                                <td><?= $inc['nombre_seccion'] ?></td>
                                 <td><?= $inc['nombre_afectado'] ?></td>
-                                <td><?= $inc['problema'] ?></td>
-                                <td><?= $inc['tipo'] ?></td>
-                                <td><?= $inc['estado'] ?></td>
-                                <td><?= $inc['fecha_inicio'] ?></td>
-                                <td><?= $inc['fecha_culminacion'] ?></td>
+                                <td><?= $inc['nombre_seccion'] ?></td>
                                 <td><?= $inc['observaciones'] ?></td>
+                                <td><?= $inc['problema'] ?></td>
+                                <td><?= $inc['fecha_inicio'] ?></td>
+
                                 <td class="center">
                                     <?php if (!empty($inc['fecha_modificacion'])): ?>
                                         <span style="font-size: 13px;"><?= date("d/m/Y H:i", strtotime($inc['fecha_modificacion'])) ?></span><br>
@@ -69,7 +65,7 @@
                                     <button class="btn btn-danger btn-sm bi bi-trash3" onclick="confirmarEliminacion(<?= $id ?>)"></button>
                                 </td>
 
-                                
+
                             </tr>
 
                             <!-- Modal Editar -->
@@ -83,9 +79,12 @@
                                             </div>
                                             <div class="modal-body">
                                                 <input type="hidden" name="id_incidencia" value="<?= $id ?>">
-
                                                 <div class="mb-2">
-                                                    <label>Sección</label>
+                                                    <label>Usuario Solicitante</label>
+                                                    <input type="text" name="nombre_afectado" value="<?= $inc['nombre_afectado'] ?>" class="form-control" required>
+                                                </div>
+                                                <div class="mb-2">
+                                                    <label>Dependencia</label>
                                                     <select class="form-select" name="id_seccion" required>
                                                         <?php
                                                         require_once("modelo/m_incidencias.php");
@@ -98,50 +97,24 @@
                                                     </select>
                                                 </div>
 
-                                                <div class="mb-2">
-                                                    <label>Nombre Afectado</label>
-                                                    <input type="text" name="nombre_afectado" value="<?= $inc['nombre_afectado'] ?>" class="form-control" required>
-                                                </div>
 
                                                 <div class="mb-2">
-                                                    <label>Problema</label>
+                                                    <label>Motivo</label>
+                                                    <textarea name="observaciones" class="form-control"><?= $inc['observaciones'] ?></textarea>
+                                                </div>
+                                                <div class="mb-2">
+                                                    <label>Servicio Realizado</label>
                                                     <input type="text" name="problema" value="<?= $inc['problema'] ?>" class="form-control" required>
                                                 </div>
 
-                                                <div class="mb-2">
-                                                    <label>Tipo</label>
-                                                    <select name="tipo" class="form-select" required>
-                                                        <?php foreach (['hardware', 'software', 'red', 'otro'] as $tipo) {
-                                                            $sel = ($inc['tipo'] == $tipo) ? 'selected' : '';
-                                                            echo "<option value='$tipo' $sel>$tipo</option>";
-                                                        } ?>
-                                                    </select>
-                                                </div>
+
 
                                                 <div class="mb-2">
-                                                    <label>Estado</label>
-                                                    <select name="estado" class="form-select" required>
-                                                        <?php foreach (['Pendiente', 'En proceso', 'Resuelto'] as $est) {
-                                                            $sel = ($inc['estado'] == $est) ? 'selected' : '';
-                                                            echo "<option value='$est' $sel>$est</option>";
-                                                        } ?>
-                                                    </select>
-                                                </div>
-
-                                                <div class="mb-2">
-                                                    <label>Fecha Inicio</label>
+                                                    <label>Fecha</label>
                                                     <input type="date" name="fecha_inicio" value="<?= $inc['fecha_inicio'] ?>" class="form-control" required>
                                                 </div>
 
-                                                <div class="mb-2">
-                                                    <label>Fecha Culminación</label>
-                                                    <input type="date" name="fecha_culminacion" value="<?= $inc['fecha_culminacion'] ?>" class="form-control">
-                                                </div>
 
-                                                <div class="mb-2">
-                                                    <label>Observaciones</label>
-                                                    <textarea name="observaciones" class="form-control"><?= $inc['observaciones'] ?></textarea>
-                                                </div>
                                             </div>
                                             <div class="modal-footer">
                                                 <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -167,7 +140,11 @@
 
                                     <div class="modal-body">
                                         <div class="mb-3">
-                                            <label>Sección</label>
+                                            <label>Usuario Solicitante</label>
+                                            <input type="text" name="nombre_afectado" class="form-control" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label>Dependencia</label>
                                             <select name="id_seccion" class="form-select" required>
                                                 <option value="">Seleccionar</option>
                                                 <?php
@@ -180,46 +157,19 @@
                                             </select>
                                         </div>
                                         <div class="mb-3">
-                                            <label>Nombre Afectado</label>
-                                            <input type="text" name="nombre_afectado" class="form-control" required>
+                                            <label>Motivo</label>
+                                            <textarea name="observaciones" class="form-control" rows="3"></textarea>
                                         </div>
                                         <div class="mb-3">
-                                            <label>Problema</label>
+                                            <label>Servicio Realizado</label>
                                             <input type="text" name="problema" class="form-control" required>
                                         </div>
                                         <div class="mb-3">
-                                            <label>Tipo</label>
-                                            <select name="tipo" class="form-select" required>
-                                                <option value="">Seleccionar</option>
-                                                <option value="hardware">Hardware</option>
-                                                <option value="software">Software</option>
-                                                <option value="red">Red</option>
-                                                <option value="otro">Otro</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="mb-3">
-                                            <label>Estado</label>
-                                            <select name="estado" class="form-select" required>
-                                                <option value="pendiente">Pendiente</option>
-                                                <option value="en proceso">En proceso</option>
-                                                <option value="resuelto">Resuelto</option>
-                                            </select>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label>Fecha Inicio</label>
+                                            <label>Fecha</label>
                                             <input type="date" name="fecha_inicio" class="form-control" required>
                                         </div>
 
-                                        <div class="mb-3">
-                                            <label>Fecha Culminación</label>
-                                            <input type="date" name="fecha_culminacion" class="form-control">
-                                        </div>
 
-                                        <div class="mb-3">
-                                            <label>Observaciones</label>
-                                            <textarea name="observaciones" class="form-control" rows="3"></textarea>
-                                        </div>
                                         <!--div class="mb-3">
                                                                 <label for="formGroupExampleInput" class="form-label">Usuario Soporte</label>
                                                                 <input type="text" name="usuario" value="<?php echo $_SESSION['usuario']; ?>" class="form-control" aria-label="RESPONSABLE" required="required">

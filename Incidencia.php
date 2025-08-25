@@ -74,10 +74,7 @@ if (!isset($_SESSION['id_soporte'])) {
                         $id_seccion = $_REQUEST['id_seccion'];
                         $nombre_afectado = $_REQUEST['nombre_afectado'];
                         $problema = $_REQUEST['problema'];
-                        $tipo = $_REQUEST['tipo'];
-                        $estado = $_REQUEST['estado'];
                         $fecha_inicio = $_REQUEST['fecha_inicio'];
-                        $fecha_culminacion = $_REQUEST['fecha_culminacion'];
                         $observaciones = $_REQUEST['observaciones'];
                         $id_soporte = $_SESSION['id_soporte'];
 
@@ -86,10 +83,7 @@ if (!isset($_SESSION['id_soporte'])) {
                             $id_seccion,
                             $nombre_afectado,
                             $problema,
-                            $tipo,
-                            $estado,
                             $fecha_inicio,
-                            $fecha_culminacion,
                             $observaciones,
                             $id_soporte
                         );

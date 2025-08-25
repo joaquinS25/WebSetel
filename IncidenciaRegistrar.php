@@ -9,14 +9,11 @@ if (isset($_POST['registrar'])) {
     $id_seccion = $_POST['id_seccion'];
     $nombre_afectado = $_POST['nombre_afectado'];
     $problema = $_POST['problema'];
-    $tipo = $_POST['tipo'];
-    $estado = $_POST['estado'];
     $fecha_inicio = $_POST['fecha_inicio'];
-    $fecha_culminacion = $_POST['fecha_culminacion'];
     $observaciones = $_POST['observaciones'];
     $id_soporte = $_SESSION['id_soporte'];
 
-    $rpta = RegistrarIncidencia($id_seccion, $nombre_afectado, $problema, $tipo, $estado, $fecha_inicio, $fecha_culminacion, $observaciones, $id_soporte);
+    $rpta = RegistrarIncidencia($id_seccion, $nombre_afectado, $problema, $fecha_inicio, $observaciones, $id_soporte);
 
     $mensaje = ($rpta == "SI") ? "ok" : "error";
 }
