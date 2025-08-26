@@ -27,30 +27,25 @@ function ListarIncidencias()
     return $datos;
 }
 
-function RegistrarIncidencia($id_seccion, $nombre_afectado, $problema, $fecha_inicio, $observaciones, $id_soporte_creacion)
+function RegistrarIncidencia($id_seccion, $nombre_afectado, $problema, $fecha_inicio, $observaciones, $estado, $id_soporte_creacion)
 {
     require("conexion.php");
-
     $sql = "INSERT INTO incidencias (
                 id_seccion, nombre_afectado, problema,
-                fecha_inicio, observaciones,
+                fecha_inicio, observaciones, estado,
                 fecha_creacion, id_soporte_creacion
             ) VALUES (
                 '$id_seccion', '$nombre_afectado', '$problema',
-                '$fecha_inicio', '$observaciones',
+                '$fecha_inicio', '$observaciones', '$estado',
                 NOW(), '$id_soporte_creacion'
             )";
-
     $res = mysqli_query($con, $sql);
-    if (!$res) {
-        die("Error al registrar incidencia: " . mysqli_error($con));
-    }
-
+    if (!$res) { die("Error al registrar incidencia: " . mysqli_error($con)); }
     mysqli_close($con);
     return "SI";
 }
 
-function ActualizarIncidencia($id_incidencia, $id_seccion, $nombre_afectado, $problema, $fecha_inicio, $observaciones, $id_soporte_modificacion)
+function ActualizarIncidencia($id_incidencia, $id_seccion, $nombre_afectado, $problema, $fecha_inicio, $observaciones, $estado, $id_soporte_modificacion)
 {
     require("conexion.php");
 
@@ -60,6 +55,7 @@ function ActualizarIncidencia($id_incidencia, $id_seccion, $nombre_afectado, $pr
                 problema = '$problema',
                 fecha_inicio = '$fecha_inicio',
                 observaciones = '$observaciones',
+                estado = '$estado',
                 fecha_modificacion = NOW(),
                 id_soporte_modificacion = '$id_soporte_modificacion'
             WHERE id_incidencia = '$id_incidencia'";

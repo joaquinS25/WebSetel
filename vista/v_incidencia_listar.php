@@ -5,9 +5,17 @@
             text-align: center;
         }
     </style>
+
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="h3 text-gray-800 mb-0">Incidencias</h1>
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Agregar</button>
+        <div>
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#importModal">
+                Importar Excel
+            </button>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Agregar
+            </button>
+        </div>
     </div>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -25,7 +33,7 @@
                             <th class="center">Motivo</th>
                             <th class="center">Servicio Realizado</th>
                             <th class="center">Fecha</th>
-
+                            <th class="center">Estado</th>
                             <th class="center">Fecha de Modificación<br>/ Modificado por</th>
                             <th class="center">Editar</th>
                             <th class="center">Eliminar</th>
@@ -49,7 +57,7 @@
                                 <td><?= $inc['observaciones'] ?></td>
                                 <td><?= $inc['problema'] ?></td>
                                 <td><?= $inc['fecha_inicio'] ?></td>
-
+                                <td><?= $inc['estado'] ?></td>
                                 <td class="center">
                                     <?php if (!empty($inc['fecha_modificacion'])): ?>
                                         <span style="font-size: 13px;"><?= date("d/m/Y H:i", strtotime($inc['fecha_modificacion'])) ?></span><br>
@@ -64,8 +72,6 @@
                                 <td>
                                     <button class="btn btn-danger btn-sm bi bi-trash3" onclick="confirmarEliminacion(<?= $id ?>)"></button>
                                 </td>
-
-
                             </tr>
 
                             <!-- Modal Editar -->
@@ -96,8 +102,6 @@
                                                         ?>
                                                     </select>
                                                 </div>
-
-
                                                 <div class="mb-2">
                                                     <label>Motivo</label>
                                                     <textarea name="observaciones" class="form-control"><?= $inc['observaciones'] ?></textarea>
@@ -106,15 +110,18 @@
                                                     <label>Servicio Realizado</label>
                                                     <input type="text" name="problema" value="<?= $inc['problema'] ?>" class="form-control" required>
                                                 </div>
-
-
-
                                                 <div class="mb-2">
                                                     <label>Fecha</label>
                                                     <input type="date" name="fecha_inicio" value="<?= $inc['fecha_inicio'] ?>" class="form-control" required>
                                                 </div>
-
-
+                                                <div class="mb-2">
+                                                    <label>Estado</label>
+                                                    <select name="estado" class="form-select" required>
+                                                        <option value="Pendiente" <?= ($inc['estado'] == "Pendiente" ? "selected" : "") ?>>PENDIENTE</option>
+                                                        <option value="En proceso" <?= ($inc['estado'] == "En proceso" ? "selected" : "") ?>>EN PROCESO</option>
+                                                        <option value="Resuelto" <?= ($inc['estado'] == "Finalizado" ? "selected" : "") ?>>RESUELTO</option>
+                                                    </select>
+                                                </div>
                                             </div>
                                             <div class="modal-footer">
                                                 <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -128,16 +135,14 @@
                     </tbody>
 
                     <!-- MODAL AGREGAR -->
-
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <form action="IncidenciaRegistrar.php" method="post">
                                     <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar Incidencia</h1>
+                                        <h1 class="modal-title fs-5">Agregar Incidencia</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-
                                     <div class="modal-body">
                                         <div class="mb-3">
                                             <label>Usuario Solicitante</label>
@@ -168,14 +173,15 @@
                                             <label>Fecha</label>
                                             <input type="date" name="fecha_inicio" class="form-control" required>
                                         </div>
-
-
-                                        <!--div class="mb-3">
-                                                                <label for="formGroupExampleInput" class="form-label">Usuario Soporte</label>
-                                                                <input type="text" name="usuario" value="<?php echo $_SESSION['usuario']; ?>" class="form-control" aria-label="RESPONSABLE" required="required">
-                                                            </div-->
+                                        <div class="mb-3">
+                                            <label>Estado</label>
+                                            <select name="estado" class="form-select" required>
+                                                <option value="Pendiente">PENDIENTE</option>
+                                                <option value="En proceso">EN PROCESO</option>
+                                                <option value="Resuelto">RESUELTO</option>
+                                            </select>
+                                        </div>
                                     </div>
-
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                                         <button type="submit" name="registrar" value="<?php echo $id_credencial; ?>" class="btn btn-primary">Agregar</button>
@@ -184,10 +190,30 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- MODAL AGREGAR -->
-
                 </table>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Importar Excel -->
+    <div class="modal fade" id="importModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="importar_incidencias.php" method="POST" enctype="multipart/form-data">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Importar incidencias desde Excel</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="archivo_excel" class="form-label">Selecciona archivo Excel (.xlsx)</label>
+                            <input type="file" name="archivo_excel" id="archivo_excel" class="form-control" accept=".xlsx" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success">Importar</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -211,12 +237,10 @@
                 const form = document.createElement('form');
                 form.method = 'POST';
                 form.action = 'Incidencia.php';
-
                 const input = document.createElement('input');
                 input.type = 'hidden';
                 input.name = 'eliminar';
                 input.value = id;
-
                 form.appendChild(input);
                 document.body.appendChild(form);
                 form.submit();

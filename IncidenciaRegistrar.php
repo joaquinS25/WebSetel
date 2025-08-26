@@ -11,9 +11,10 @@ if (isset($_POST['registrar'])) {
     $problema = $_POST['problema'];
     $fecha_inicio = $_POST['fecha_inicio'];
     $observaciones = $_POST['observaciones'];
+    $estado = $_POST['estado'];
     $id_soporte = $_SESSION['id_soporte'];
 
-    $rpta = RegistrarIncidencia($id_seccion, $nombre_afectado, $problema, $fecha_inicio, $observaciones, $id_soporte);
+     $rpta = RegistrarIncidencia($id_seccion, $nombre_afectado, $problema, $fecha_inicio, $observaciones, $estado, $id_soporte);
 
     $mensaje = ($rpta == "SI") ? "ok" : "error";
 }

@@ -76,17 +76,10 @@ if (!isset($_SESSION['id_soporte'])) {
                         $problema = $_REQUEST['problema'];
                         $fecha_inicio = $_REQUEST['fecha_inicio'];
                         $observaciones = $_REQUEST['observaciones'];
+                         $estado = $_REQUEST['estado'];
                         $id_soporte = $_SESSION['id_soporte'];
 
-                        $rpta = ActualizarIncidencia(
-                            $id_incidencia,
-                            $id_seccion,
-                            $nombre_afectado,
-                            $problema,
-                            $fecha_inicio,
-                            $observaciones,
-                            $id_soporte
-                        );
+                       $rpta = ActualizarIncidencia($id_incidencia, $id_seccion, $nombre_afectado, $problema, $fecha_inicio, $observaciones, $estado, $id_soporte);
 
                         if ($rpta === "SI") {
                             echo "<script>
