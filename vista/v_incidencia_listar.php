@@ -9,9 +9,7 @@
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="h3 text-gray-800 mb-0">Incidencias</h1>
         <div>
-            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#importModal">
-                Importar Excel
-            </button>
+            
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Agregar
             </button>
@@ -194,29 +192,7 @@
             </div>
         </div>
     </div>
-    <!-- Modal Importar Excel -->
-    <div class="modal fade" id="importModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form action="importar_incidencias.php" method="POST" enctype="multipart/form-data">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Importar incidencias desde Excel</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="archivo_excel" class="form-label">Selecciona archivo Excel (.xlsx)</label>
-                            <input type="file" name="archivo_excel" id="archivo_excel" class="form-control" accept=".xlsx" required>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-success">Importar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+    
 </div>
 
 <!-- SweetAlert para eliminar -->
