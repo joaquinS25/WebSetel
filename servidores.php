@@ -27,24 +27,58 @@ require("modelo/m_servidores.php");
                 // Si se presiona el botón editar
                 if (isset($_REQUEST['editar'])) {
                     $id_credencial = $_REQUEST['editar'];
-                    echo "<script>location.href='credencialEditar.php?id_credencial={$id_credencial}';</script>";
+                    echo "<script>location.href='servidorEditar.php?id_credencial={$id_credencial}';</script>";
                 }
+
+                /* ===================== ELIMINAR ===================== */
+                    if (isset($_POST['eliminar'])) {
+                        $id_credencial = $_POST['eliminar'];
+                        $rpta = EliminarServidor($id_credencial);
+
+                        if ($rpta === "SI") {
+                            echo "<script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    Swal.fire({icon:'success',title:'¡Eliminado!',text:'El registro fue eliminado correctamente.',confirmButtonColor:'#3085d6'});
+                                });
+                            </script>";
+                        } else {
+                            echo "<script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    Swal.fire({icon:'error',title:'Error',text:'No se pudo eliminar el registro.',confirmButtonColor:'#d33'});
+                                });
+                            </script>";
+                        }
+                    }
 
                 // Si se presiona el botón actualizar
                 if (isset($_POST['actualizar'])) {
-                    $id_credencial = $_POST['id_credencial'];
-                    $nombre_servidor = $_POST['nombre_credencial'];
-                    $usuario = $_POST['usuario'];
-                    $contrasena = $_POST['contrasena'];
-                    $descripcion = $_POST['descripcion'];
-                    $usuarioSoporte = $_SESSION['usuario']; // <- CORRECTO
+                    $id_credencial       = $_POST['id_credencial'];
 
+                    // ✅ Todos los campos de la tabla
+                    $modelo_servidor   = $_POST['modelo_servidor'];
+                    $procesador        = $_POST['procesador'];
+                    $cant_procesador   = $_POST['cant_procesador'];
+                    $cant_cpu          = $_POST['cant_cpu'];
+                    $ram               = $_POST['ram'];
+                    $total             = $_POST['total'];
+                    $fisico            = $_POST['fisico'];
+                    $logico            = $_POST['logico'];
+                    $nombre_equipo     = $_POST['nombre_equipo'];
+                    $ip                = $_POST['ip'];
+                    $tipo_servidor     = $_POST['tipo_servidor'];
+                    $nombre_usuario    = $_POST['nombre_usuario'];
+                    $contrasena        = $_POST['contrasena'];
+                    $origen            = $_POST['origen'];
+                    $so                = $_POST['so'];
+                    $utilidad          = $_POST['utilidad'];
+
+                    $usuarioSoporte    = $_SESSION['usuario'];
+
+                    // ✅ Llamada al modelo con todos los campos
                     $resultado = ActualizarServidor(
                         $id_credencial,
-                        $nombre_servidor,
-                        $usuario,
-                        $contrasena,
-                        $descripcion,
+                        $modelo_servidor, $procesador, $cant_procesador, $cant_cpu, $ram, $total, $fisico, $logico,
+                        $nombre_equipo, $ip, $tipo_servidor, $nombre_usuario, $contrasena, $origen, $so, $utilidad,
                         $usuarioSoporte
                     );
 
@@ -71,6 +105,7 @@ require("modelo/m_servidores.php");
                     }
                 }
 
+                // ✅ Listar todos los servidores
                 $servidores = ListarServidores();
                 require("vista/v_servidores_listar.php");
                 ?>

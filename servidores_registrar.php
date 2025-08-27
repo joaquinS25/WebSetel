@@ -28,24 +28,47 @@ session_start();
                     ?>
                 </nav>
 
-                <main>
+                <main class="container-fluid">
                     <?php
                     require("modelo/m_servidores.php");
 
                     if (isset($_REQUEST['registrar'])) {
-                        $nombre_servidor = $_REQUEST['nombre_servidor'];
-                        $user = $_REQUEST['user'];
-                        $contrasena = $_REQUEST['contrasena'];
-                        $descripcion = $_REQUEST['descripcion'];
-                        $usuario_soporte = $_SESSION['usuario']; // se guarda automáticamente
+                        // ✅ Recibimos valores del formulario
+                        $modelo_servidor   = $_REQUEST['modelo_servidor'];
+                        $procesador        = $_REQUEST['procesador'];
+                        $cant_procesador   = $_REQUEST['cant_procesador'];
+                        $cant_cpu          = $_REQUEST['cant_cpu'];
+                        $ram               = $_REQUEST['ram'];
+                        $total             = $_REQUEST['total'];
+                        $fisico            = $_REQUEST['fisico'];
+                        $logico            = $_REQUEST['logico'];
+                        $nombre_equipo     = $_REQUEST['nombre_equipo'];
+                        $ip                = $_REQUEST['ip'];
+                        $tipo_servidor     = $_REQUEST['tipo_servidor'];
+                        $nombre_usuario    = $_REQUEST['nombre_usuario'];
+                        $contrasena        = $_REQUEST['contrasena'];
+                        $origen            = $_REQUEST['origen'];
+                        $so                = $_REQUEST['so'];
+                        $utilidad          = $_REQUEST['utilidad'];
 
-                        $rpta = RegistrarServidor($nombre_servidor, $user, $contrasena, $descripcion, $usuario_soporte);
+                        // ✅ Usuario que está logeado (se guarda en sesión)
+                        $usuario_soporte   = $_SESSION['usuario'];
+
+                        // ✅ Registrar en BD
+                        $rpta = RegistrarServidor(
+                            $modelo_servidor, $procesador, $cant_procesador, $cant_cpu, $ram, $total, $fisico, $logico,
+                            $nombre_equipo, $ip, $tipo_servidor, $nombre_usuario, $contrasena, $origen, $so, $utilidad,
+                            $usuario_soporte
+                        );
 
                         if ($rpta == "SI") {
                             echo "<script>location.href='servidores.php';</script>";
+                        } else {
+                            echo "<div class='alert alert-danger'>❌ Error al registrar servidor</div>";
                         }
                     }
 
+                    // ✅ Mostrar formulario de registro (sin ID ni fechas)
                     require("vista/v_servidores_registrar.php");
                     ?>
                 </main>

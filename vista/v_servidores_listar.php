@@ -25,10 +25,22 @@
                         <tr>
                             <th class="table-secondary center">#</th>
                             <th class="table-secondary center">Fecha de Creación /<br> Creador</th>
-                            <th class="table-secondary center">NOMBRE SERVIDOR</th>
-                            <th class="table-secondary center">USUARIO</th>
-                            <th class="table-secondary center">CONTRASEÑA</th>
-                            <th class="table-secondary center">DESCRIPCIÓN</th>
+                            <th class="table-secondary center">Modelo</th>
+                            <th class="table-secondary center">Procesador</th>
+                            <th class="table-secondary center">Cant. Procesador</th>
+                            <th class="table-secondary center">Cant. CPU</th>
+                            <th class="table-secondary center">RAM</th>
+                            <th class="table-secondary center">Total</th>
+                            <th class="table-secondary center">Físico</th>
+                            <th class="table-secondary center">Lógico</th>
+                            <th class="table-secondary center">NOMBRE DE EQUIPO</th>
+                            <th class="table-secondary center">IP</th>
+                            <th class="table-secondary center">Tipo Servidor</th>
+                            <th class="table-secondary center">Usuario</th>
+                            <th class="table-secondary center">Contraseña</th>
+                            <th class="table-secondary center">Origen</th>
+                            <th class="table-secondary center">SO</th>
+                            <th class="table-secondary center">Utilidad</th>
                             <th class="table-secondary center">Modificado</th>
                             <th class="table-secondary center">Editar</th>
                             <th class="table-secondary center">Eliminar</th>
@@ -40,13 +52,6 @@
                         foreach ($servidores as $value) {
                             $n++;
                             $id_credencial = $value['id_credencial'];
-                            $nombre_credencial = $value['nombre_servidor'];
-                            $usuario = $value['user'];
-                            $contrasena = $value['contrasena'];
-                            $descripcion = $value["descripcion"];
-                            $usuarioSoporte = $value["usuario"];
-                            $id_modal = "#modal" . $id_credencial;
-                            $modal = "modal" . $id_credencial;
                         ?>
                             <tr>
                                 <td class="center"><?php echo $n; ?></td>
@@ -54,55 +59,121 @@
                                     <span style="color:rgb(0, 0, 0); font-size: 14px;">
                                         <?php echo date("d/m/Y H:i", strtotime($value['fecha_creacion'])); ?>
                                     </span><br>
-                                    <strong style="color:rgb(0, 0, 0);">Por: <?php echo $usuarioSoporte; ?></strong>
+                                    <strong style="color:rgb(0, 0, 0);">Por: <?php echo $value["usuario_creacion"]; ?></strong>
                                 </td>
-                                <td class="center"><?php echo $nombre_credencial; ?></td>
-                                <td class="center"><?php echo $usuario; ?></td>
-                                <td class="center"><?php echo $contrasena; ?></td>
-                                <td class="center"><?php echo $descripcion; ?></td>
+                                <td class="center"><?php echo $value['modelo_servidor']; ?></td>
+                                <td class="center"><?php echo $value['procesador']; ?></td>
+                                <td class="center"><?php echo $value['cant_procesador']; ?></td>
+                                <td class="center"><?php echo $value['cant_cpu']; ?></td>
+                                <td class="center"><?php echo $value['ram']; ?></td>
+                                <td class="center"><?php echo $value['total']; ?></td>
+                                <td class="center"><?php echo $value['fisico']; ?></td>
+                                <td class="center"><?php echo $value['logico']; ?></td>
+                                <td class="center"><?php echo $value['nombre_equipo']; ?></td>
+                                <td class="center"><?php echo $value['ip']; ?></td>
+                                <td class="center"><?php echo $value['tipo_servidor']; ?></td>
+                                 <td class="center"><?php echo $value['nombre_usuario']; ?></td>
+                                <td class="center"><?php echo $value['contrasena']; ?></td>
+                                <td class="center"><?php echo $value['origen']; ?></td>
+                                <td class="center"><?php echo $value['so']; ?></td>
+                                <td class="center"><?php echo $value['utilidad']; ?></td>
                                 <td class="center">
-                                    <?php if (!empty($value['actualizado_el'])): ?>
+                                    <?php if (!empty($value['fecha_modificacion'])): ?>
                                         <span style="color:rgb(0, 0, 0); font-size: 14px;">
-                                            <?php echo date("d/m/Y H:i", strtotime($value['actualizado_el'])); ?>
+                                            <?php echo date("d/m/Y H:i", strtotime($value['fecha_modificacion'])); ?>
                                         </span><br>
-                                        <strong style="color:rgb(0, 0, 0);">Por: <?php echo $value['actualizado_por']; ?></strong>
+                                        <strong style="color:rgb(0, 0, 0);">Por: <?php echo $value['usuario_modificacion']; ?></strong>
                                     <?php endif; ?>
                                 </td>
                                 <td class="center">
                                     <button type="button" class="btn btn-sm btn-warning bi bi-pencil-square"
-                                        data-bs-toggle="modal" data-bs-target="<?php echo $id_modal; ?>"></button>
+                                        data-bs-toggle="modal" data-bs-target="#modal<?php echo $id_credencial; ?>"></button>
                                 </td>
                                 <td class="center">
-                                    <button class="btn btn-danger btnEliminar bi bi-trash3"
-                                        data-id="<?php echo $id_credencial; ?>"></button>
+                                    <button class="btn btn-danger btnEliminar bi bi-trash3"onclick="confirmarEliminacion(<?php echo $id_credencial; ?>)"></button>
                                 </td>
                             </tr>
+
                             <!-- Modal Editar -->
-                            <div class="modal fade" id="<?php echo $modal; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
+                            <div class="modal fade" id="modal<?php echo $id_credencial; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
-                                        <form action="servidores.php" method="post">
+                                       <form action="servidores.php" method="post">
                                             <div class="modal-header">
                                                 <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Credenciales</h1>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
                                                 <input type="hidden" name="id_credencial" value="<?php echo $id_credencial; ?>">
-                                                <div class="mb-3">
-                                                    <label class="form-label">Nombre de Servidor</label>
-                                                    <input type="text" name="nombre_credencial" value="<?php echo $nombre_credencial; ?>" class="form-control" required>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label">Usuario de servidor</label>
-                                                    <input type="text" name="usuario" value="<?php echo $usuario; ?>" class="form-control" required>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label">Contraseña del Servidor</label>
-                                                    <input type="text" name="contrasena" value="<?php echo $contrasena; ?>" class="form-control" required>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label">Descripción</label>
-                                                    <input type="text" name="descripcion" value="<?php echo $descripcion; ?>" class="form-control" required>
+
+                                                <div class="row">
+                                                    
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Modelo Servidor</label>
+                                                        <input type="text" name="modelo_servidor" value="<?php echo $value['modelo_servidor']; ?>" class="form-control">
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Procesador</label>
+                                                        <input type="text" name="procesador" value="<?php echo $value['procesador']; ?>" class="form-control">
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Cantidad Procesador</label>
+                                                        <input type="text" name="cant_procesador" value="<?php echo $value['cant_procesador']; ?>" class="form-control">
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Cantidad CPU</label>
+                                                        <input type="text" name="cant_cpu" value="<?php echo $value['cant_cpu']; ?>" class="form-control">
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">RAM</label>
+                                                        <input type="text" name="ram" value="<?php echo $value['ram']; ?>" class="form-control">
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Total</label>
+                                                        <input type="text" name="total" value="<?php echo $value['total']; ?>" class="form-control">
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Físico</label>
+                                                        <input type="text" name="fisico" value="<?php echo $value['fisico']; ?>" class="form-control">
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Lógico</label>
+                                                        <input type="text" name="logico" value="<?php echo $value['logico']; ?>" class="form-control">
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Nombre Equipo</label>
+                                                        <input type="text" name="nombre_equipo" value="<?php echo $value['nombre_equipo']; ?>" class="form-control">
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">IP</label>
+                                                        <input type="text" name="ip" value="<?php echo $value['ip']; ?>" class="form-control">
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Tipo Servidor</label>
+                                                        <input type="text" name="tipo_servidor" value="<?php echo $value['tipo_servidor']; ?>" class="form-control">
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Usuario</label>
+                                                        <input type="text" name="nombre_usuario" value="<?php echo $value['nombre_usuario']; ?>" class="form-control" required>
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Contraseña</label>
+                                                        <input type="text" name="contrasena" value="<?php echo $value['contrasena']; ?>" class="form-control" required>
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Origen</label>
+                                                        <input type="text" name="origen" value="<?php echo $value['origen']; ?>" class="form-control">
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">SO</label>
+                                                        <input type="text" name="so" value="<?php echo $value['so']; ?>" class="form-control">
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Utilidad</label>
+                                                        <input type="text" name="utilidad" value="<?php echo $value['utilidad']; ?>" class="form-control">
+                                                    </div>
+                                                    
+                                                    
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -117,9 +188,8 @@
                     </tbody>
 
                     <!-- MODAL AGREGAR -->
-
                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
-                        <div class="modal-dialog">
+                        <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <form action="servidores_registrar.php" method="post">
                                     <div class="modal-header">
@@ -128,104 +198,120 @@
                                     </div>
 
                                     <div class="modal-body">
-                                        <div class="mb-3">
-                                            <input type="hidden" name="id_credencial">
-                                            <label for="formGroupExampleInput" class="form-label">Nombre de Servidor</label>
-                                            <input type="text" name="nombre_servidor" class="form-control" aria-label="TIPO DE PRODUCTO" required="required">
-                                            <br>
+                                        <div class="row">
+                                            
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label">Modelo Servidor</label>
+                                                <input type="text" name="modelo_servidor" class="form-control">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label">Procesador</label>
+                                                <input type="text" name="procesador" class="form-control">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label">Cantidad Procesador</label>
+                                                <input type="text" name="cant_procesador" class="form-control">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label">Cantidad CPU</label>
+                                                <input type="text" name="cant_cpu" class="form-control">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label">RAM</label>
+                                                <input type="text" name="ram" class="form-control">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label">Total</label>
+                                                <input type="text" name="total" class="form-control">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label">Físico</label>
+                                                <input type="text" name="fisico" class="form-control">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label">Lógico</label>
+                                                <input type="text" name="logico" class="form-control">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label">Nombre Equipo</label>
+                                                <input type="text" name="nombre_equipo" class="form-control">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label">IP</label>
+                                                <input type="text" name="ip" class="form-control">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label">Tipo Servidor</label>
+                                                <input type="text" name="tipo_servidor" class="form-control">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label">Usuario</label>
+                                                <input type="text" name="nombre_usuario" class="form-control" required>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label">Contraseña</label>
+                                                <input type="text" name="contrasena" class="form-control" required>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label">Origen</label>
+                                                <input type="text" name="origen" class="form-control">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label">SO</label>
+                                                <input type="text" name="so" class="form-control">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label">Utilidad</label>
+                                                <input type="text" name="utilidad" class="form-control">
+                                            </div>
+                                            
+                                           
                                         </div>
-                                        <div class="mb-3">
-                                            <label for="formGroupExampleInput" class="form-label">USuario de servidor</label>
-                                            <input type="text" name="user" class="form-control" aria-label="NSG" required="required">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="formGroupExampleInput" class="form-label">Contraseña del Servidor</label>
-                                            <input type="text" name="contrasena" class="form-control" aria-label="DESCRIPCION" required="required">
-                                            <br>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="formGroupExampleInput" class="form-label">Descripción</label>
-                                            <input type="text" name="descripcion" class="form-control" aria-label="IP" required="required">
-                                        </div>
-                                        <!--div class="mb-3">
-                                                                <label for="formGroupExampleInput" class="form-label">Usuario Soporte</label>
-                                                                <input type="text" name="usuario" value="<?php echo $_SESSION['usuario']; ?>" class="form-control" aria-label="RESPONSABLE" required="required">
-                                                            </div-->
                                     </div>
 
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                        <button type="submit" name="registrar" value="<?php echo $id_credencial; ?>" class="btn btn-primary">Agregar</button>
+                                        <button type="submit" name="registrar" class="btn btn-primary">Agregar</button>
                                     </div>
                                 </form>
                             </div>
                         </div>
                     </div>
+                    <!-- FIN MODAL AGREGAR -->
 
-                    <!-- MODAL AGREGAR -->
-                    </tbody>
                 </table>
 
             </div>
         </div>
     </div>
+<script>
+    function confirmarEliminacion(id) {
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "¡No podrás revertir esto!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = 'servidores.php';
+
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'eliminar';
+                input.value = id;
+
+                form.appendChild(input);
+                document.body.appendChild(form);
+                form.submit();
+            }
+        });
+    }
+</script>
 
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-    document.querySelectorAll(".btnEliminar").forEach(button => {
-        button.addEventListener("click", function() {
-            const id = this.getAttribute("data-id");
-
-            Swal.fire({
-                title: '¿Estás seguro?',
-                text: "Esta acción no se puede deshacer",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Sí, eliminar',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    fetch("modelo/servidores_eliminar.php", {
-                            method: "POST",
-                            headers: {
-                                'Content-Type': 'application/x-www-form-urlencoded'
-                            },
-                            body: `id_credencial=${id}` // <- CORRECTO
-                        })
-                        .then(res => res.json())
-                        .then(data => {
-                            if (data.status === "SI") {
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Eliminado',
-                                    text: 'El servidor ha sido eliminado correctamente',
-                                    timer: 1500,
-                                    showConfirmButton: false
-                                }).then(() => {
-                                    location.reload();
-                                });
-                            } else {
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Error',
-                                    text: 'No se pudo eliminar el servidor'
-                                });
-                            }
-                        })
-                        .catch(err => {
-                            console.error(err);
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Error',
-                                text: 'Error al comunicarse con el servidor'
-                            });
-                        });
-                }
-            });
-        });
-    });
-</script>

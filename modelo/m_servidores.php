@@ -3,14 +3,21 @@ function ListarServidores()
 {
     require("conexion.php");
 
-    $sql = "SELECT credenciales_servidores.*, usuarios_soporte.usuario AS usuario
-            FROM credenciales_servidores
-            INNER JOIN usuarios_soporte ON credenciales_servidores.id_soporte = usuarios_soporte.id_soporte";
+    $sql = "SELECT cs.*, 
+                   u1.usuario AS usuario_creacion, 
+                   u2.usuario AS usuario_modificacion
+            FROM credenciales_servidores cs
+            LEFT JOIN usuarios_soporte u1 ON cs.id_soporte_creacion = u1.id_soporte
+            LEFT JOIN usuarios_soporte u2 ON cs.id_soporte_modificacion = u2.id_soporte";
+
     $res = mysqli_query($con, $sql);
 
-    $datos = array();
+    if (!$res) {
+        die("❌ Error en la consulta SQL: " . mysqli_error($con) . " - Consulta: " . $sql);
+    }
 
-    while ($fila = mysqli_fetch_array($res, MYSQLI_ASSOC)) {
+    $datos = [];
+    while ($fila = mysqli_fetch_assoc($res)) {
         $datos[] = $fila;
     }
 
@@ -18,27 +25,39 @@ function ListarServidores()
     return $datos;
 }
 
-function RegistrarServidor($nombre_servidor, $user, $contrasena, $descripcion, $usuario)
+function RegistrarServidor($modelo_servidor, $procesador, $cant_procesador, $cant_cpu, $ram, $total, $fisico, $logico,
+                           $nombre_equipo, $ip, $tipo_servidor, $nombre_usuario, $contrasena, $origen, $so, $utilidad, $usuarioSesion)
 {
     require("conexion.php");
 
-    $sql = "SELECT id_soporte FROM usuarios_soporte WHERE usuario = '$usuario'";
-    $res = mysqli_query($con, $sql);
+    // Buscar ID del usuario logeado
+    $sql = "SELECT id_soporte FROM usuarios_soporte WHERE usuario = ?";
+    $stmt = mysqli_prepare($con, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $usuarioSesion);
+    mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
     $row = mysqli_fetch_assoc($res);
     $id_soporte = $row['id_soporte'];
-
-    $fecha_creacion = date("Y-m-d H:i:s");
+    mysqli_stmt_close($stmt);
 
     $sql = "INSERT INTO credenciales_servidores (
-                nombre_servidor, user, contrasena, descripcion, id_soporte, fecha_creacion
-            ) VALUES (
-                '$nombre_servidor', '$user', '$contrasena', '$descripcion', '$id_soporte', '$fecha_creacion'
-            )";
+                modelo_servidor, procesador, cant_procesador, cant_cpu, ram, total, fisico, logico,
+                nombre_equipo, ip, tipo_servidor, nombre_usuario, contrasena, origen, so, utilidad,
+                id_soporte_creacion, fecha_creacion
+            ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NOW())";
 
-    mysqli_query($con, $sql);
+    $stmt = mysqli_prepare($con, $sql);
+    mysqli_stmt_bind_param($stmt, "ssssssssssssssssi",
+        $modelo_servidor, $procesador, $cant_procesador, $cant_cpu, $ram, $total, $fisico, $logico,
+        $nombre_equipo, $ip, $tipo_servidor, $nombre_usuario, $contrasena, $origen, $so, $utilidad,
+        $id_soporte
+    );
 
+    $ok = mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
     mysqli_close($con);
-    return "SI";
+
+    return $ok ? "SI" : "NO";
 }
 
 function ListarUsuariosSoporte()
@@ -46,10 +65,10 @@ function ListarUsuariosSoporte()
     require("conexion.php");
 
     $sql = "SELECT id_soporte, usuario FROM usuarios_soporte";
-    $resultado = $con->query($sql);
+    $resultado = mysqli_query($con, $sql);
 
     $usuarios_soporte = [];
-    while ($fila = $resultado->fetch_assoc()) {
+    while ($fila = mysqli_fetch_assoc($resultado)) {
         $usuarios_soporte[] = $fila;
     }
 
@@ -60,51 +79,75 @@ function ListarUsuariosSoporte()
 function EliminarServidor($id_credencial)
 {
     require("conexion.php");
-    $sql = "DELETE FROM credenciales_servidores WHERE id_credencial = '$id_credencial'";
-    $res = mysqli_query($con, $sql);
+
+    $sql = "DELETE FROM credenciales_servidores WHERE id_credencial = ?";
+    $stmt = mysqli_prepare($con, $sql);
+    mysqli_stmt_bind_param($stmt, "i", $id_credencial);
+    $ok = mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
     mysqli_close($con);
-    return ($res) ? "SI" : "NO";
+
+    return $ok ? "SI" : "NO";
 }
 
-function ConsultarSevidores($id_credencial)
+function ConsultarServidores($id_credencial)
 {
     require("conexion.php");
 
-    $sql = "SELECT credenciales_servidores.*, usuarios_soporte.usuario AS usuario
-            FROM credenciales_servidores
-            INNER JOIN usuarios_soporte ON credenciales_servidores.id_soporte = usuarios_soporte.id_soporte
-            WHERE credenciales_servidores.id_credencial = '$id_credencial'";
-    $res = mysqli_query($con, $sql);
+    $sql = "SELECT cs.*, u.usuario AS usuario
+            FROM credenciales_servidores cs
+            INNER JOIN usuarios_soporte u ON cs.id_soporte_creacion = u.id_soporte
+            WHERE cs.id_credencial = ?";
+    $stmt = mysqli_prepare($con, $sql);
+    mysqli_stmt_bind_param($stmt, "i", $id_credencial);
+    mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
 
-    $datos = array();
-
-    while ($fila = mysqli_fetch_array($res, MYSQLI_ASSOC)) {
+    $datos = [];
+    while ($fila = mysqli_fetch_assoc($res)) {
         $datos[] = $fila;
     }
 
+    mysqli_stmt_close($stmt);
     mysqli_close($con);
+
     return $datos;
 }
 
-function ActualizarServidor($id_credencial, $nombre_servidor, $usuario, $contrasena, $descripcion, $usuarioSoporte) {
+function ActualizarServidor($id_credencial, $modelo_servidor, $procesador, $cant_procesador, $cant_cpu, $ram, $total, $fisico, $logico,
+                            $nombre_equipo, $ip, $tipo_servidor, $nombre_usuario, $contrasena, $origen, $so, $utilidad, $usuarioSesion)
+{
     require("conexion.php");
 
-    $fecha_actual = date("Y-m-d H:i:s");
+    // Buscar ID del usuario logeado
+    $sql = "SELECT id_soporte FROM usuarios_soporte WHERE usuario = ?";
+    $stmt = mysqli_prepare($con, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $usuarioSesion);
+    mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
+    $row = mysqli_fetch_assoc($res);
+    $id_soporte_modificacion = $row['id_soporte'];
+    mysqli_stmt_close($stmt);
 
-    // Solo actualiza campos editables + campos de modificación, sin tocar id_soporte ni fecha_creacion
     $sql = "UPDATE credenciales_servidores 
-            SET nombre_servidor = '$nombre_servidor', 
-                user = '$usuario',
-                contrasena = '$contrasena',
-                descripcion = '$descripcion',
-                actualizado_el = '$fecha_actual',
-                actualizado_por = '$usuarioSoporte'
-            WHERE id_credencial = '$id_credencial'";
+            SET modelo_servidor = ?, procesador = ?, cant_procesador = ?, cant_cpu = ?, ram = ?, total = ?, 
+                fisico = ?, logico = ?, nombre_equipo = ?, ip = ?, tipo_servidor = ?, nombre_usuario = ?, contrasena = ?, 
+                origen = ?, so = ?, utilidad = ?, 
+                id_soporte_modificacion = ?, fecha_modificacion = NOW()
+            WHERE id_credencial = ?";
 
-    $resultado = mysqli_query($con, $sql);
-    return ($resultado) ? "SI" : "NO";
+    $stmt = mysqli_prepare($con, $sql);
+    mysqli_stmt_bind_param($stmt, "sssssssssssssssiii",
+        $modelo_servidor, $procesador, $cant_procesador, $cant_cpu, $ram, $total, $fisico, $logico,
+        $nombre_equipo, $ip, $tipo_servidor, $nombre_usuario, $contrasena, $origen, $so, $utilidad,
+        $id_soporte_modificacion, $id_credencial
+    );
 
+    $ok = mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
     mysqli_close($con);
+
+    return $ok ? "SI" : "NO";
 }
-
-
+?>
