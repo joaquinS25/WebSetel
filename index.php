@@ -23,6 +23,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            /*justify-content: flex-end;  *//* a la derecha */
+            /*align-items: flex-start;   */ /* arriba */
             height: 100vh;
         }
 
@@ -82,15 +84,16 @@
 <body>
 
     <div class="container">
-        <div class="row justify-content-center">
+        <div class="login-header">
+            <!-- Logo del Ejército del Perú -->
+            <img src="img/logo.png" alt="Logo Ejército del Perú">
+            <h2>OFICINA DE ECONOMÍA DEL EJÉRCITO</h2>
+            <p class="text-white">Seccion Telematica</p>
+        </div>
+        <div class="row justify-content-center">    
             <div class="col-xl-6 col-lg-8 col-md-10">
                 <div class="card login-card">
-                    <div class="login-header">
-                        <!-- Logo del Ejército del Perú -->
-                        <img src="img/logo.png" alt="Logo Ejército del Perú">
-                        <h2>OFICINA DE ECONOMÍA DEL EJÉRCITO</h2>
-                        <p class="text-white">Seccion Telematica</p>
-                    </div>
+
                     <div class="card-body">
                         <form action="autentificacion.php" method="post" class="user">
                             <div class="form-group">
@@ -112,12 +115,12 @@
                             </button>
                         </form>
                         <hr>
-                        <div class="text-center">
+                        <!--div class="text-center">
                             <a class="small" href="forgot-password.php"><strong>¿Olvidaste tu contraseña?</strong></a>
                         </div>
                         <div class="text-center">
                             <a class="small" href="register.php"><strong>Crear una cuenta nueva</strong></a>
-                        </div>
+                        </div-->
                     </div>
                 </div>
             </div>
