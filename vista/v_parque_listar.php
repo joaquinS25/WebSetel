@@ -30,19 +30,19 @@
                             <th class="table-secondary center">Cargo o fuera de cargos</th>
                             <th class="table-secondary center">NSG</th>
                             <th class="table-secondary center">Descripción del artículo</th>
-                            <th class="table-secondary center">Marca</th>
+                            <!--th class="table-secondary center">Marca</th>
                             <th class="table-secondary center">Procesador</th>
                             <th class="table-secondary center">Generación</th>
                             <th class="table-secondary center">RAM</th>
                             <th class="table-secondary center">SSD</th>
-                            <th class="table-secondary center">HDD</th>
+                            <th class="table-secondary center">HDD</th-->
                             <th class="table-secondary center">SO</th>
                             <th class="table-secondary center">Antivirus</th>
                             <th class="table-secondary center">Situación</th>
                             <th class="table-secondary center">IP</th>
-                            <th class="table-secondary center">Chasqui</th>
+                            <!--th class="table-secondary center">Chasqui</th>
                             <th class="table-secondary center">MAC</th>
-                            <th class="table-secondary center">Nombre de equipo</th>
+                            <th class="table-secondary center">Nombre de equipo</th-->
                             <th class="table-secondary center">Origen</th>
                             <th class="table-secondary center">Última Modificación</th>
                             <th class="table-secondary center">Editar</th>
@@ -86,6 +86,7 @@
 
                             $id_modal = "#modal" . $id_equipo;
                             $modal    = "modal" . $id_equipo;
+                            $id_modal_detalle  = "modalDetalle" . $id_equipo;
                         ?>
                             <tr>
                                 <td class="center"><?php echo $n; ?></td>
@@ -105,19 +106,19 @@
                                 <td class="center"><?php echo $cargo; ?></td>
                                 <td class="center"><?php echo $nsg; ?></td>
                                 <td class="center"><?php echo $descripcion; ?></td>
-                                <td class="center"><?php echo $marca; ?></td>
+                                <!--td class="center"><?php echo $marca; ?></td>
                                 <td class="center"><?php echo $procesador; ?></td>
                                 <td class="center"><?php echo $generacion; ?></td>
                                 <td class="center"><?php echo $ram; ?></td>
                                 <td class="center"><?php echo $ssd; ?></td>
-                                <td class="center"><?php echo $hdd; ?></td>
+                                <td class="center"><?php echo $hdd; ?></td-->
                                 <td class="center"><?php echo $so; ?></td>
                                 <td class="center"><?php echo $antivirus; ?></td>
                                 <td class="center"><?php echo $situacion; ?></td>
                                 <td class="center nowrap"><?php echo $ip; ?></td>
-                                <td class="center"><?php echo $chasqui; ?></td>
+                                <!--td class="center"><?php echo $chasqui; ?></td>
                                 <td class="center nowrap"><?php echo $mac; ?></td>
-                                <td class="center"><?php echo $nombre_equipo; ?></td>
+                                <td class="center"><?php echo $nombre_equipo; ?></td-->
                                 <td class="center"><?php echo $origen; ?></td>
                                 <td class="center">
                                     <?php
@@ -131,11 +132,51 @@
                                 <td class="center">
                                     <button type="button" class="btn btn-sm btn-warning bi bi-pencil-square" data-bs-toggle="modal" data-bs-target="<?php echo $id_modal; ?>"></button>
                                 </td>
-                                <td class="center">
+                               <td class="center">
+                                    <button type="button" class="btn btn-sm btn-info text-white bi bi-eye-fill" data-bs-toggle="modal" data-bs-target="#<?php echo $id_modal_detalle; ?>"></button>
                                     <button type="button" class="text-dark btn btn-sm btn-danger bi bi-trash3" onclick="confirmarEliminacion(<?php echo $id_equipo; ?>)"></button>
                                 </td>
                             </tr>
-
+                            
+                            <!-- MODAL DETALLE -->
+                            <div class="modal fade" id="<?php echo $id_modal_detalle; ?>" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog modal-xl">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-info text-white">
+                                            <h5 class="modal-title">Detalles del Equipo (ID: <?php echo $id_equipo; ?>)</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row g-3">
+                                                <div class="col-md-6"><label class="form-label fw-bold">Sección:</label> <p><?php echo $seccion; ?></p></div>
+                                                <div class="col-md-6"><label class="form-label fw-bold">Grado:</label> <p><?php echo $grado; ?></p></div>
+                                                <div class="col-md-6"><label class="form-label fw-bold">Responsable:</label> <p><?php echo $responsable; ?></p></div>
+                                                <div class="col-md-6"><label class="form-label fw-bold">CIP/DNI:</label> <p><?php echo $cip_dni; ?></p></div>
+                                                <div class="col-md-6"><label class="form-label fw-bold">Cargo o fuera de cargos:</label> <p><?php echo $cargo; ?></p></div>
+                                                <div class="col-md-6"><label class="form-label fw-bold">NSG:</label> <p><?php echo $nsg; ?></p></div>
+                                                <div class="col-md-6"><label class="form-label fw-bold">Descripción del artículo:</label> <p><?php echo $descripcion; ?></p></div>
+                                                <div class="col-md-6"><label class="form-label fw-bold">Marca:</label> <p><?php echo $marca; ?></p></div>
+                                                <div class="col-md-6"><label class="form-label fw-bold">Procesador:</label> <p><?php echo $procesador; ?></p></div>
+                                                <div class="col-md-6"><label class="form-label fw-bold">Generación:</label> <p><?php echo $generacion; ?></p></div>
+                                                <div class="col-md-6"><label class="form-label fw-bold">RAM:</label> <p><?php echo $ram; ?></p></div>
+                                                <div class="col-md-6"><label class="form-label fw-bold">SSD:</label> <p><?php echo $ssd; ?></p></div>
+                                                <div class="col-md-6"><label class="form-label fw-bold">HDD:</label> <p><?php echo $hdd; ?></p></div>
+                                                <div class="col-md-6"><label class="form-label fw-bold">Sistema Operativo:</label> <p><?php echo $so; ?></p></div>
+                                                <div class="col-md-6"><label class="form-label fw-bold">Antivirus:</label> <p><?php echo $antivirus; ?></p></div>
+                                                <div class="col-md-6"><label class="form-label fw-bold">Situación:</label> <p><?php echo $situacion; ?></p></div>
+                                                <div class="col-md-6"><label class="form-label fw-bold">IP:</label> <p><?php echo $ip; ?></p></div>
+                                                <div class="col-md-6"><label class="form-label fw-bold">Chasqui:</label> <p><?php echo $chasqui; ?></p></div>
+                                                <div class="col-md-6"><label class="form-label fw-bold">MAC:</label> <p><?php echo $mac; ?></p></div>
+                                                <div class="col-md-6"><label class="form-label fw-bold">Nombre de equipo:</label> <p><?php echo $nombre_equipo; ?></p></div>
+                                                <div class="col-md-6"><label class="form-label fw-bold">Origen:</label> <p><?php echo $origen; ?></p></div>
+                                                <div class="col-md-6"><label class="form-label fw-bold">Fecha Creación:</label> <p><?php echo $fecha_creacion . " (" . $creador . ")"; ?></p></div>
+                                                <div class="col-md-6"><label class="form-label fw-bold">Última Modificación:</label> <p><?php echo $fecha_modificacion . " (" . $modificador . ")"; ?></p></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
                             <!-- MODAL EDITAR -->
                             <div class="modal fade" id="<?php echo $modal; ?>" tabindex="-1" aria-hidden="true">
                                 <div class="modal-dialog modal-xl">
