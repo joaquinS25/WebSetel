@@ -27,7 +27,7 @@
                             <th class="table-secondary center">Grado</th>
                             <th class="table-secondary center">Responsable</th>
                             <th class="table-secondary center">CIP / DNI</th>
-                            <th class="table-secondary center">Cargo o fuera de cargos</th>
+                            <!--th class="table-secondary center">Cargo o fuera de cargos</th-->
                             <th class="table-secondary center">NSG</th>
                             <th class="table-secondary center">Descripción del artículo</th>
                             <!--th class="table-secondary center">Marca</th>
@@ -47,6 +47,7 @@
                             <th class="table-secondary center">Última Modificación</th>
                             <th class="table-secondary center">Editar</th>
                             <th class="table-secondary center">Eliminar</th>
+                            <th class="table-secondary center">Detalle</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -103,7 +104,7 @@
                                 <td class="center"><?php echo $grado; ?></td>
                                 <td class="center"><?php echo $responsable; ?></td>
                                 <td class="center nowrap"><?php echo $cip_dni; ?></td>
-                                <td class="center"><?php echo $cargo; ?></td>
+                                <!--td class="center"><?php echo $cargo; ?></td-->
                                 <td class="center"><?php echo $nsg; ?></td>
                                 <td class="center"><?php echo $descripcion; ?></td>
                                 <!--td class="center"><?php echo $marca; ?></td>
@@ -133,8 +134,11 @@
                                     <button type="button" class="btn btn-sm btn-warning bi bi-pencil-square" data-bs-toggle="modal" data-bs-target="<?php echo $id_modal; ?>"></button>
                                 </td>
                                <td class="center">
-                                    <button type="button" class="btn btn-sm btn-info text-white bi bi-eye-fill" data-bs-toggle="modal" data-bs-target="#<?php echo $id_modal_detalle; ?>"></button>
+                                   
                                     <button type="button" class="text-dark btn btn-sm btn-danger bi bi-trash3" onclick="confirmarEliminacion(<?php echo $id_equipo; ?>)"></button>
+                                </td>
+                                <td>
+                                     <button type="button" class="btn btn-sm btn-info text-white bi bi-eye-fill" data-bs-toggle="modal" data-bs-target="#<?php echo $id_modal_detalle; ?>"></button>
                                 </td>
                             </tr>
                             
@@ -152,7 +156,7 @@
                                                 <div class="col-md-6"><label class="form-label fw-bold">Grado:</label> <p><?php echo $grado; ?></p></div>
                                                 <div class="col-md-6"><label class="form-label fw-bold">Responsable:</label> <p><?php echo $responsable; ?></p></div>
                                                 <div class="col-md-6"><label class="form-label fw-bold">CIP/DNI:</label> <p><?php echo $cip_dni; ?></p></div>
-                                                <div class="col-md-6"><label class="form-label fw-bold">Cargo o fuera de cargos:</label> <p><?php echo $cargo; ?></p></div>
+                                                <!--div class="col-md-6"><label class="form-label fw-bold">Cargo o fuera de cargos:</label> <p><?php echo $cargo; ?></p></div-->
                                                 <div class="col-md-6"><label class="form-label fw-bold">NSG:</label> <p><?php echo $nsg; ?></p></div>
                                                 <div class="col-md-6"><label class="form-label fw-bold">Descripción del artículo:</label> <p><?php echo $descripcion; ?></p></div>
                                                 <div class="col-md-6"><label class="form-label fw-bold">Marca:</label> <p><?php echo $marca; ?></p></div>
@@ -207,7 +211,7 @@
                                                     <div class="col-md-6"><label class="form-label">Grado</label><input type="text" name="grado" value="<?php echo $grado; ?>" class="form-control" required></div>
                                                     <div class="col-md-6"><label class="form-label">Responsable</label><input type="text" name="responsable" value="<?php echo $responsable; ?>" class="form-control" required></div>
                                                     <div class="col-md-6"><label class="form-label">CIP/DNI</label><input type="text" name="cip_dni" value="<?php echo $cip_dni; ?>" class="form-control" required></div>
-                                                    <div class="col-md-6"><label class="form-label">Cargo</label><input type="text" name="cargo_fuera" value="<?php echo $cargo; ?>" class="form-control" required></div>
+                                                    <!--div class="col-md-6"><label class="form-label">Cargo</label><input type="text" name="cargo_fuera" value="<?php echo $cargo; ?>" class="form-control" required></div-->
                                                     <div class="col-md-6"><label class="form-label">NSG</label><input type="text" name="nsg" value="<?php echo $nsg; ?>" class="form-control"></div>
                                                     <div class="col-md-6"><label class="form-label">Descripción</label><input type="text" name="descripcion_articulo" value="<?php echo $descripcion; ?>" class="form-control" required></div>
                                                     <div class="col-md-6"><label class="form-label">Marca</label><input type="text" name="marca" value="<?php echo $marca; ?>" class="form-control"></div>
