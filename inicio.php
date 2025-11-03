@@ -53,7 +53,7 @@ session_start();
                 <hr class="sidebar-divider">
 
                 <!-- Tarjetas -->
-                <div class="row">
+                <!--div class="row">
                     <div class="col-xl-2 col-md-6 mb-4">
                         <div class="card border-left-dark shadow h-100 py-2">
                             <div class="card-body">
@@ -73,7 +73,13 @@ session_start();
                             </div>
                         </div>
                     </div>
+                </div-->
+
+                <!-- Tarjetas dinámicas de computadoras por sección -->
+                <div class="row" id="tarjetas-secciones">
+                    <!-- Aquí se cargarán las tarjetas con JS -->
                 </div>
+
 
                 <!-- Fila de gráficos -->
                 <div class="row">
@@ -230,6 +236,60 @@ document.addEventListener("DOMContentLoaded", () => {
     cargarGrafico(mesInicial);
 });
 </script>
+
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+    const contenedorTarjetas = document.getElementById("tarjetas-secciones");
+
+    try {
+        const response = await fetch("modelo/datos_tarjetas.php");
+        if (!response.ok) throw new Error("No se pudo obtener la información");
+        const data = await response.json();
+
+        if (!Array.isArray(data) || data.length === 0) {
+            contenedorTarjetas.innerHTML = `
+                <div class="col-12 text-center text-muted">
+                    No hay computadoras registradas en ninguna sección.
+                </div>`;
+            return;
+        }
+
+        contenedorTarjetas.innerHTML = data.map((item, index) => {
+            const colores = [
+                "border-left-primary",
+                "border-left-success",
+                "border-left-info",
+                "border-left-warning",
+                "border-left-danger",
+                "border-left-secondary"
+            ];
+            const color = colores[index % colores.length];
+
+            return `
+                <div class="col-xl-2 col-md-6 mb-4">
+                    <div class="card ${color} shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="text-xs font-weight-bold text-uppercase mb-1 text-dark">
+                                ${item.seccion}
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                ${item.total} Computadoras
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+        }).join("");
+
+    } catch (error) {
+        console.error("Error al cargar tarjetas:", error);
+        contenedorTarjetas.innerHTML = `
+            <div class="col-12 text-center text-danger">
+                Error al cargar las tarjetas.
+            </div>`;
+    }
+});
+</script>
+
 
 </body>
 </html>
