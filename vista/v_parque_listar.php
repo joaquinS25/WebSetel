@@ -6,11 +6,24 @@
     </style>
 
     <!-- Page Heading -->
-    <div class="d-flex justify-content-between align-items-center mb-3">
+   <div class="d-flex justify-content-between align-items-center mb-3">
+    
         <h1 class="h3 mb-2 text-gray-800">Parque Informático</h1>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAgregarParque">Agregar</button>
+        
+        <div class="d-flex gap-2">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAgregarParque">
+                Agregar
+            </button>
+
+            <a href="exportar_parque.php" class="btn btn-success">
+                <i class="fas fa-file-excel"></i> Exportar a Excel
+            </a>
+        </div>
+
     </div>
 
+
+    
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
